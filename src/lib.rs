@@ -5,6 +5,8 @@ pub mod prelude {
   pub use crate::app::APP_NAME;
 }
 
+use prelude::*;
+
 pub mod plugins {
 
 }
@@ -17,5 +19,6 @@ mod app {
     Entry,
   }
 
-  pub const APP_NAME: &str = "bevy_gamejame5";
+  pub const APP_NAME: &str = "Kani-Kai";
 }
+

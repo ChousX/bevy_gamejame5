@@ -55,4 +55,8 @@ fn button_system_action(
     }
 }
 
-
+fn despawn_all<T: Component>( query: Query<Entity, With<T>>, mut commands: Commands) {
+    for e in query.iter(){
+        commands.entity(e).despawn_recursive()
+    }
+}

@@ -18,17 +18,22 @@ impl Plugin for MainMenuPlugin{
                     .distributive_run_if(
                         in_state(AppState::MainMenu)
                     )
+            ).add_systems(
+                OnExit(AppState::MainMenu), 
+                despawn_all::<MainMenuRoot>
             );
     }
 }
 
+#[derive(Component)]
+struct MainMenuRoot;
 
 fn setup(
     mut commands: Commands,
     mut ui_materials: ResMut<Assets<CustomUiMaterial>>,
 ){
 
-    let root = commands.spawn(MaterialNodeBundle {
+    let root = commands.spawn((MaterialNodeBundle {
         style: Style {
             width: Val::Percent(100.0),
             height: Val::Percent(100.0),
@@ -39,7 +44,9 @@ fn setup(
             color: LinearRgba::WHITE.to_f32_array().into(),
         }),
         ..default()
-    }).id();
+    },
+    MainMenuRoot,
+    )).id();
 
     let padding0 = commands.spawn(NodeBundle {
         style: Style {

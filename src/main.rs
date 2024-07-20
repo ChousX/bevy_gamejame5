@@ -1,7 +1,12 @@
-use bevy_gamejame5::{plugins::*, prelude::*, test_basic};
+use bevy_gamejame5::{
+    plugins::*, 
+    prelude::*
+};
+
 
 fn main() {
     App::new()
+        .insert_resource(ClearColor(css::PLUM.into()))
         .add_plugins(DefaultPlugins.set(WindowPlugin{
             primary_window: Some(Window{ 
                 title: APP_NAME.into(), 
@@ -11,5 +16,14 @@ fn main() {
             }),
             ..default()
         }))
+        .init_state::<AppState>()
+        .add_loading_state(
+            LoadingState::new(AppState::Entry)
+                .continue_to_state(AppState::MainMenu)
+                //.load_collection::<AudioAssets>(),
+        ).add_plugins((
+                CameraPlugin,
+                MenuPlugin,
+        ))
         .run();
 }

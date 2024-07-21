@@ -25,8 +25,7 @@
           xorg.libXcursor
           xorg.libXi
           xorg.libXrandr
-          xorg.xf86-video-nouveau
-
+          xorg.xf86videonouveau
           #Wayland
           libxkbcommon 
           wayland

@@ -49,7 +49,7 @@ pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
 
 #[derive(AssetCollection, Resource)]
 pub struct TerrainTextures{
-    #[asset(path = "timemaps/tilemap.png")]
+    #[asset(path = "tilemaps/tilemap.png")]
     pub tiles: Handle<Image>,
 }
 

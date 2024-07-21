@@ -16,6 +16,7 @@ mod soul;
 mod body;
 mod names;
 mod domains;
+mod game;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;

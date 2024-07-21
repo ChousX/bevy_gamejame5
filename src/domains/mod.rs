@@ -11,7 +11,7 @@ impl Plugin for DomainPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_systems(OnEnter(AppState::Game), add_domain)
-    }
+    ;}
 }
 
 pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
@@ -36,7 +36,7 @@ pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
         grid_size,
         size: map_size,
         storage: tile_storage,
-        texture: TilemapTexture::Single(texture_handle),
+        texture: TilemapTexture::Single(assets.tiles.clone()),
         tile_size,
         map_type,
         transform: get_tilemap_center_transform(&map_size, &grid_size, &map_type, 0.0),
@@ -49,8 +49,8 @@ pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
 
 #[derive(AssetCollection, Resource)]
 pub struct TerrainTextures{
-    #[asset(path = "todo!()")]
-    tiles: Handle<Image>,
+    #[asset(path = "timemaps/tilemap.png")]
+    pub tiles: Handle<Image>,
 }
 
 

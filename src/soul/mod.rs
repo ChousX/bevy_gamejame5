@@ -1,13 +1,10 @@
 use crate::prelude::*;
 
-mod personality;
-pub use personality::*;
+mod personality_traits;
+pub use personality_traits::*;
 
 mod gender;
 pub use gender::*;
-
-mod failings;
-pub use failings::*;
 
 pub struct SoulPlugin;
 impl Plugin for SoulPlugin{

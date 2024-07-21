@@ -1,4 +1,6 @@
-enum PersonalityTrait {
+use crate::prelude::*;
+
+pub enum PositivePersonalityTrait {
     Adventurous,
     Ambitious,
     Analytical,

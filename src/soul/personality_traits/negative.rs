@@ -3,7 +3,7 @@ use strum::{VariantNames, EnumString, VariantArray};
 
 #[derive(Debug, EnumString, VariantNames, VariantArray)]
 #[strum(serialize_all = "kebab-case")]
-enum PersonalFailing {
+pub enum NegativePersonalityTrait {
     Arrogance,
     Dishonesty,
     Impatience,

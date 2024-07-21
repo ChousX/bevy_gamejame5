@@ -34,7 +34,6 @@
           trunk
           dart-sass
           wasm-bindgen-cli
-          wasm-bindgen
         ];
         nativeBuildInputs = with pkgs; [
           pkg-config

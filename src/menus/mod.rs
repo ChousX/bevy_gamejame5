@@ -1,6 +1,7 @@
 use crate::prelude::*;
 mod main_menu;
 pub use main_menu::*;
+use crate::helpers::despawn_all;
 
 pub struct MenuPlugin;
 impl Plugin for MenuPlugin{
@@ -55,8 +56,3 @@ fn button_system_action(
     }
 }
 
-fn despawn_all<T: Component>( query: Query<Entity, With<T>>, mut commands: Commands) {
-    for e in query.iter(){
-        commands.entity(e).despawn_recursive()
-    }
-}

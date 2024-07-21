@@ -5,7 +5,6 @@ pub mod prelude {
   pub use rand::prelude::*;
   pub use crate::app::*;
   pub use crate::domains::TerrainTextures;
-
 }
 
 use prelude::*;
@@ -18,6 +17,7 @@ mod names;
 mod domains;
 mod game;
 mod splash_screan;
+mod helpers;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;
@@ -26,6 +26,7 @@ pub mod plugins {
     pub use crate::domains::DomainPlugin;
     pub use crate::soul::SoulPlugin;
     pub use crate::body::BodyPlugin;
+    pub use crate::splash_screan::SplashScreenPlugin;
 }
 
 mod app {
@@ -33,7 +34,7 @@ mod app {
   #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
   pub enum AppState {
     #[default]
-    Entry,
+    Enter,
     MainMenu,
     Game,
   }

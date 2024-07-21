@@ -19,7 +19,7 @@ fn main() {
         }))
         .init_state::<AppState>()
         .add_loading_state(
-            LoadingState::new(AppState::Entry)
+            LoadingState::new(AppState::Enter)
                 .continue_to_state(AppState::MainMenu)
                 .load_collection::<TerrainTextures>(),
         ).add_plugins((
@@ -29,6 +29,7 @@ fn main() {
                 BodyPlugin,
                 SoulPlugin,
                 DomainPlugin,
+                SplashScreenPlugin,
         ))
         .run();
 }

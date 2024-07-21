@@ -68,6 +68,9 @@
           };
         };
 
+        programs.nix-ld = {
+          enable = true;
+        };
         # For `nix develop`:
         devShell = pkgs.mkShell {
           nativeBuildInputs = all_deps;

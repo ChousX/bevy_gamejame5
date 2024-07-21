@@ -4,6 +4,7 @@ pub mod prelude {
   pub use bevy_asset_loader::prelude::*;
   pub use rand::prelude::*;
   pub use crate::app::*;
+  pub use crate::domains::TerrainTextures;
 
 }
 
@@ -14,6 +15,7 @@ mod camera;
 mod soul;
 mod body;
 mod names;
+mod domains;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;

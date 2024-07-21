@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 bevy = { package = "bevy", version = "0.14.0" }
 bevy_asset_loader = "0.21.0"
+bevy_ecs_tilemap = "0.14.0"
 rand = "0.8.5"
 strum = { version = "0.26", features = ["derive"] }
 

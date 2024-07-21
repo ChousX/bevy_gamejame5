@@ -21,7 +21,7 @@ fn main() {
         .add_loading_state(
             LoadingState::new(AppState::Entry)
                 .continue_to_state(AppState::MainMenu)
-                //.load_collection::<AudioAssets>(),
+                .load_collection::<TerrainTextures>(),
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,

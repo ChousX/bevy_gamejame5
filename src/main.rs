@@ -25,6 +25,10 @@ fn main() {
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,
+                GamePlugin,
+                BodyPlugin,
+                SoulPlugin,
+                DomainPlugin,
         ))
         .run();
 }

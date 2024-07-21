@@ -17,10 +17,15 @@ mod body;
 mod names;
 mod domains;
 mod game;
+mod splash_screan;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;
     pub use crate::camera::CameraPlugin;
+    pub use crate::game::GamePlugin;
+    pub use crate::domains::DomainPlugin;
+    pub use crate::soul::SoulPlugin;
+    pub use crate::body::BodyPlugin;
 }
 
 mod app {

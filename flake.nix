@@ -32,7 +32,6 @@
 
           #Web
           trunk
-          sass
           dart-sass
           wasm-bindgen-cli
         ];

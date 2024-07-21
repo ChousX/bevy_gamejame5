@@ -62,13 +62,13 @@ cargo = false
 
 [tools]
 # Default dart-sass version to download.
-sass = "1.69.5"
+dart-sass = "3.7.4"
 # Default wasm-bindgen version to download.
 wasm_bindgen = "0.2.92"
 # Default wasm-opt version to download.
 wasm_opt = "version_116"
 # Default tailwindcss-cli version to download.
-tailwindcss = "3.3.5"
+# tailwindcss = "3.3.5"
 
 ## proxy
 # Proxies are optional, and default to `None`.

@@ -29,7 +29,7 @@ pub enum Direction {
 }
 
 #[derive(Event)]
-pub struct CameraMoveEvent(Direction);
+pub struct CameraMoveEvent(pub Direction);
 
 #[derive(Resource)]
 pub struct CameraSpeed(pub f32);

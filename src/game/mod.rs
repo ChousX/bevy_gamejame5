@@ -12,5 +12,6 @@ impl Plugin for GamePlugin {
 #[source(AppState = AppState::Game)]
 pub enum GamePhase{
     #[default]
-    ChooseSoul,
+    None,
+    Pause,
 }

@@ -10,27 +10,43 @@ impl Plugin for DomainPlugin {
 
     fn build(&self, app: &mut App) {
         app
-            .add_systems(OnEnter(AppState::Game), add_domain)
+            .add_systems(
+                OnEnter(AppState::Game),
+                add_domain
+            ).add_plugins(
+                TilemapPlugin
+            )
     ;}
 }
 
-pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
-    let map_size = TilemapSize { x: 100, y: 100 };
+pub fn add_domain(
+    mut commands: Commands,
+    assets: Res<TerrainTextures>
+) {
+    let map_size = TilemapSize { x: 10, y: 10 };
     let mut tile_storage = TileStorage::empty(map_size);
     let tilemap_entity = commands.spawn_empty().id();
     let tilemap_id = TilemapId(tilemap_entity);
     let tile_size = TilemapTileSize { x: 64.0, y: 32.0 };
     let grid_size = tile_size.into();
+    let domain_type = ();
     let map_type = TilemapType::Isometric(IsoCoordSystem::Staggered);
-
-    fill_tilemap_rect(
-        TileTextureIndex(0),
-        TilePos { x: 0, y: 0 },
-        map_size,
-        tilemap_id,
-        &mut commands,
-        &mut tile_storage,
-    );
+    let TilemapSize { x: max_x, y: max_y } = map_size.clone();
+    for y in 0..max_y {
+        for x in 0..max_x {
+            let tile_pos = TilePos {x, y};
+            let tile = commands.spawn((
+                    TileBundle {
+                        position: tile_pos,
+                        texture_index: TileTextureIndex(0),
+                        tilemap_id: tilemap_id.clone(),
+                        visible: TileVisible(true),
+                        ..default()
+                    },
+            )).id();
+            tile_storage.set(&tile_pos, tile);
+        }
+    }
 
     commands.entity(tilemap_entity).insert(TilemapBundle {
         grid_size,
@@ -41,15 +57,14 @@ pub fn add_domain(mut commands: Commands, assets: Res<TerrainTextures>){
         map_type,
         transform: get_tilemap_center_transform(&map_size, &grid_size, &map_type, 0.0),
         ..Default::default()
-    });
+    }).insert((
 
-
-
+    ));
 }
 
 #[derive(AssetCollection, Resource)]
 pub struct TerrainTextures{
-    #[asset(path = "tilemaps/tilemap.png")]
+    #[asset(path = "tilemaps/iso_color.png")]
     pub tiles: Handle<Image>,
 }
 
@@ -60,14 +75,5 @@ pub enum DomainType{
     Island,
     Mountans,
     Plains,
-}
-
-pub struct DomainSize{
-    tile_count: UVec2,
-    tile_size: Vec2,
-}
-
-pub struct DomainBundle{
-
 }
 

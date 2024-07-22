@@ -7,7 +7,6 @@ use bevy_gamejame5::{
 fn main() {
     App::new()
         .insert_resource(ClearColor(css::PLUM.into()))
-        .init_resource::<AppSeed>()
         .add_plugins(DefaultPlugins.set(WindowPlugin{
             primary_window: Some(Window{ 
                 title: APP_NAME.into(), 

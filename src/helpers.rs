@@ -8,4 +8,3 @@ pub fn despawn_all<T: Component>(
         commands.entity(entity).despawn_recursive();
     }
 }
-

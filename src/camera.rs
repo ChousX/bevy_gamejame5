@@ -13,7 +13,10 @@ impl Plugin for CameraPlugin {
             ).add_systems(
                 Update,
                 update_speed.run_if(on_event::<CameraMoveEvent>()
-            ));
+            )).add_systems(
+                Update,
+                camera_bounder.run_if(in_state(AppState::Game))
+            );
     }
 }
 
@@ -30,6 +33,12 @@ pub enum Direction {
 
 #[derive(Event)]
 pub struct CameraMoveEvent(pub Direction);
+
+#[derive(Resource)]
+pub struct CameraBounds{
+    pub min: Vec2,
+    pub max: Vec2,
+}
 
 #[derive(Resource)]
 pub struct CameraSpeed(pub f32);
@@ -68,4 +77,23 @@ fn update_speed(
     let dif = camera.0 * time.delta_seconds();
     camera.0 -= dif;
     pos.translation += dif.extend(0.0);
+}
+
+fn camera_bounder(
+    mut camera_pos: Query<&mut Transform, (With<MainCamera>, Changed<Transform>)>,
+    bounds: Res<CameraBounds>,
+) {
+    let mut pos = camera_pos.single_mut();
+    if pos.translation.x > bounds.max.x {
+        pos.translation.x = bounds.max.x;
+    }
+    if pos.translation.y > bounds.max.y {
+        pos.translation.y = bounds.max.y
+    }
+    if pos.translation.x < bounds.min.x {
+        pos.translation.x = bound.min.x
+    }
+    if pis.translation.y < bounds.min.y {
+        pos.translation.y = bounds.min.y;
+    }
 }

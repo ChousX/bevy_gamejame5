@@ -1,4 +1,10 @@
-use crate::{camera::{CameraMoveEvent, Direction}, prelude::*};
+use crate::{
+    camera::{
+        CameraMoveEvent,
+        Direction
+    },
+    prelude::*
+};
 
 pub struct ControlesPlugin;
 impl Plugin for ControlesPlugin {
@@ -6,11 +12,19 @@ impl Plugin for ControlesPlugin {
         app
             .init_state::<ControlerInputType>()
             .init_resource::<KeyboardBindings>()
+            .add_systems(
+                Update,
+                keyboard_camera_controler
+                    .run_if(
+                        in_state(ControlerInputType::KeyboardMouse)
+                            .and_then(in_state(AppState::Game)))
+            )
     ;}
 }
 
 #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ControlerInputType {
+    None,
     #[default]
     KeyboardMouse,
     Gamepad,

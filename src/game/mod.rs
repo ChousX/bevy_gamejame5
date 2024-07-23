@@ -3,6 +3,7 @@ use soul_selection::SoulSelectionPlugin;
 
 use crate::prelude::*;
 
+mod gui;
 mod soul_selection;
 mod body_selection;
 

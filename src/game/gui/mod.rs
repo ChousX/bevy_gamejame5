@@ -1,6 +1,3 @@
-
-use bevy::transform::commands;
-
 use super::*;
 
 mod stats_dysplay;
@@ -23,8 +20,19 @@ impl Plugin for GameUiPlugin {
 #[derive(Componant)]
 pub struct GameUiRoot;
 
+
 #[derive(Componant)]
 pub struct GameUiTopSection;
+
+#[derive(Componant)]
+pub struct GameUiTopSectionLeft;
+
+#[derive(Componant)]
+pub struct GameUiTopSectionMiddle;
+
+#[derive(Componant)]
+pub struct GameUiTopSectionRight;
+
 
 #[derive(Componant)]
 pub struct GameUiMidSection;
@@ -34,6 +42,7 @@ pub struct GameUiMidSectionLeft;
 
 #[derive(Componant)]
 pub struct GameUiMidSectionRight;
+
 
 #[derive(Componant)]
 pub struct GameUiBottomSection;
@@ -98,11 +107,52 @@ fn init_gui(
     commands.entity(root).add_child(middle_section);
     commands.entity(root).add_child(bottom_section);
 
+    let top_section_left = commands.spawn((
+        NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            ..default()
+        },
+        GameUiTopSectionLeft,
+    )).id();
+
+    let top_section_middle = commands.spawn((
+        NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            ..default()
+        },
+        GameUiTopSectionLeft,
+    )).id();
+
+    let top_section_right = commands.spawn((
+        NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            ..default()
+        },
+        GameUiTopSectionLeft,
+    )).id();
+
+    commands.entity(top_section).add_child(top_section_left);
+    commands.entity(top_section).add_child(top_section_middle);
+    commands.entity(top_section).add_child(top_section_right);
+
     let middle_section_left = commands.spawn((
         NodeBundle {
             style: Style {
                 width: Val::Percent(20.0),
                 height: Val::Percent(100.0),
+                flex_direction: FlexDirection::Column,
                 ..default()
             },
             ..default()
@@ -115,6 +165,7 @@ fn init_gui(
             style: Style {
                 width: Val::Percent(20.0),
                 height: Val::Percent(100.0),
+                flex_direction: FlexDirection::Column,
                 ..default()
             },
             ..default()
@@ -137,6 +188,4 @@ fn init_gui(
     commands.entity(middle_section).add_child(middle_section_padding);
     commands.entity(middle_section).add_child(middle_section_right);
 }
-
-
 

@@ -21,10 +21,10 @@ impl Plugin for SoulSelectionPlugin {
     }
 }
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct SoulSelectionMenuRoot;
 
-#[derive(Recorce)]
+#[derive(Resource)]
 pub struct SoulSelectionAmount(pub u8);
 impl Default for SoulSelectionAmount {
     fn default () -> Self {

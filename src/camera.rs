@@ -91,9 +91,9 @@ fn camera_bounder(
         pos.translation.y = bounds.max.y
     }
     if pos.translation.x < bounds.min.x {
-        pos.translation.x = bound.min.x
+        pos.translation.x = bounds.min.x
     }
-    if pis.translation.y < bounds.min.y {
+    if pos.translation.y < bounds.min.y {
         pos.translation.y = bounds.min.y;
     }
 }

@@ -4,6 +4,9 @@ mod stats_dysplay;
 mod time_dysplay;
 mod mini_map_dysplay;
 
+pub use stats_dysplay::*;
+pub use time_dysplay::*;
+pub use mini_map_dysplay::*;
 
 pub struct GameUiPlugin;
 
@@ -17,39 +20,38 @@ impl Plugin for GameUiPlugin {
     ;}
 }
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiRoot;
 
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiTopSection;
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiTopSectionLeft;
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiTopSectionMiddle;
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiTopSectionRight;
 
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiMidSection;
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiMidSectionLeft;
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiMidSectionRight;
 
 
-#[derive(Componant)]
+#[derive(Component)]
 pub struct GameUiBottomSection;
 
 fn init_gui(
     mut commands: Commands,
-    root: Res<GameUiRoot>,
 ) {
     let root = commands.spawn((
         NodeBundle {

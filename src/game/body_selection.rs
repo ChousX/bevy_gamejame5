@@ -15,9 +15,10 @@ impl Plugin for BodySelectionPlugin {
     }
 }
 
-#[derive(Componant)]
+#[derive(Component)]
 struct BodySelectionMenuRoot;
 
+#[derive(Resource)]
 pub struct BodySelectionAmmount(pub u8);
 impl Default for BodySelectionAmmount {
     fn default() -> Self {

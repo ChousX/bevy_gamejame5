@@ -3,10 +3,14 @@ use body_selection::BodySelectionPlugin;
 use soul_selection::SoulSelectionPlugin;
 
 use crate::prelude::*;
+use std::time::Duration;
+
 
 mod gui;
 mod soul_selection;
 mod body_selection;
+
+use gui::*;
 
 pub struct GamePlugin;
 impl Plugin for GamePlugin {
@@ -20,8 +24,9 @@ impl Plugin for GamePlugin {
             .add_systems(
                 Update, 
                 update_game_time
-                    .run_if(resource_exists(resource_exists::<GameTime>)
-                        .and_then(in_state(GameState::Running))))
+                    .run_if(in_state(GamePhase::Tribulation)
+                        .and_then(in_state(GameState::Running)))
+            )
             .add_plugins((
                 BodySelectionPlugin,
                 SoulSelectionPlugin,
@@ -86,8 +91,10 @@ pub struct GameTime(pub Timer);
 fn init_game_time(
     mut commands: Commands,
     time_mode: Res<GameTimeMode>,
+    mut ui: EventWriter<NewTimeUi>
 ) {
-    commands.insert_resource(GameTime(time_mode.get_time));
+    commands.insert_resource(GameTime(time_mode.get_time()));
+    ui.send(NewTimeUi);
 }
 
 ///If there is a game time update it 
@@ -97,10 +104,11 @@ fn update_game_time(
     mut game_time: ResMut<GameTime>,
     time: Res<Time>,
     mut next_state: ResMut<NextState<GamePhase>>,
+    mut ui: EventWriter<DeleteTimeUi>,
 ) {
     game_time.0.tick(time.delta());
 
-    if game_time.0.is_finished() {
+    if game_time.0.finished() {
         commands.remove_resource::<GameTime>();
         next_state.set(GamePhase::LifeRecap);
     }

@@ -1,5 +1,7 @@
 use crate::prelude::*;
 
+mod soul_selection;
+
 pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
@@ -13,5 +15,6 @@ impl Plugin for GamePlugin {
 pub enum GamePhase{
     #[default]
     None,
+    SoulSelection,
     Pause,
 }

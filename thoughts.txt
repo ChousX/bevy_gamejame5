@@ -1,0 +1,51 @@
+Game loop
+
+Select a Soul
+Give it a Body
+
+Fight for Servial
+if lived {
+  give perks
+  keep all progras
+  give option to save current soul and us another
+  option to change body (if new soul chose new body required)
+} else {
+  harm used Soul
+  if soul brakes {
+    chouse new soul
+  } else {
+    give option to save current soul and us another
+  }
+  chouse new body
+}
+
+
+
+
+Skills
+  skills can be granted by the soul or gained during play 
+    if you accend with a soul they can game one skill forever
+  
+
+
+Dao
+  Can B granted by the soul or gained during play,
+  aslong as the soul exist the dao with be there unless badlay damaged
+
+Synergy
+  Skill and Dao can Synergies Producing somthing grater than before
+  it might be neet to give options for the eveolution like maybe you can make it a passive to free up a slot
+
+
+
+MainGame
+  send swarms of mobs at body.
+    body uses (skills) attacks on timer
+
+MVP
+  Pick Soul Keep using Soul Untel you die
+  --[Repeat Start Here]
+  Each run change bodys 
+  Fight Avitarts of the Univers 
+  Gain there Power and Refine your body and soul
+  Repeat

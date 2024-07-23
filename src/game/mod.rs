@@ -27,8 +27,10 @@ pub enum GamePhase{
     SoulSelection,
     // Chouse a body to house your chosen soul
     BodySelection,
-    // Servivor gameplay 
-    Play,
+    //Setup Defensis and what not 
+    Prepration,
+    // Pick Trials to forge your Servivor gameplay 
+    Tribulation,
     // Long turm advancment
     SoulReinforcement,
     // Run turm advancment

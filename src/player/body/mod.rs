@@ -12,21 +12,23 @@ impl Plugin for BodyPlugin{
 }
 
 
-#[derive(Component, Default)]
+#[derive(Component, Default, Clone, Copy)]
 pub struct BodyRoot;
 
-pub struct BodySpeed(pub f32);
-impl Default for BodySpeed{
-    fn default() -> Default{
+#[derive(Component, Clone)]
+pub struct Speed(pub f32);
+impl Default for Speed{
+    fn default() -> Self{
         Self(1.0)
     }
 }
 
-pub struct BodyHitPoints{
+#[derive(Component, Clone, Copy)]
+pub struct HitPoints{
     pub max: f32,
     pub current: f32,
 }
-impl  Default for BodyHitPoints {
+impl  Default for HitPoints {
     fn default () -> Self{
         const VAL: f32 = 100.0;
         Self{
@@ -37,15 +39,17 @@ impl  Default for BodyHitPoints {
 }
 
 
-pub struct BodyHitPointRegeneration(pub f32);
-impl Default for BodyHitPointRegeneration{
+#[derive(Component, Clone, Copy)]
+pub struct HitPointRegeneration(pub f32);
+impl Default for HitPointRegeneration{
     fn default () -> Self{
         Self(0.1)
     }
 }
 
-pub struct BodySize(pub f32);
-impl Default for BodySize{
+#[derive(Component, Clone, Copy)]
+pub struct Size(pub f32);
+impl Default for Size{
     fn default() -> Self{
         Self(1.0)
     }
@@ -54,8 +58,8 @@ impl Default for BodySize{
 #[derive(Bundle, Default)]
 pub struct BodyBundle{
     pub root: BodyRoot,
-    pub speed: BodySpeed,
-    pub hit_points: BodyHitPoints,
-    pub hit_points_regen: BodyHitPointRegeneration,
-    pub size: BodySize,
+    pub speed: Speed,
+    pub hit_points: HitPoints,
+    pub hit_points_regen: HitPointRegeneration,
+    pub size: Size,
 }

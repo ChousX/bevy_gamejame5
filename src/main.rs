@@ -25,10 +25,9 @@ fn main() {
                 CameraPlugin,
                 MenuPlugin,
                 GamePlugin,
-                BodyPlugin,
-                SoulPlugin,
                 DomainPlugin,
                 SplashScreenPlugin,
+                PlayerPlugin,
         ))
         .run();
 }

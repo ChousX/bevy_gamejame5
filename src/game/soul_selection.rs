@@ -87,6 +87,6 @@ fn init_menu(
 }
 
 fn menu_soul_select(
-    mut commands: Command,
+    mut commands: Commands,
     mut next_state: ResMut<NextState<GamePhase>>
 ){}

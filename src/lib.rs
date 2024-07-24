@@ -11,8 +11,8 @@ use prelude::*;
 
 mod menus;
 mod camera;
-mod soul;
-mod body;
+//mod soul;
+//mod body;
 mod names;
 mod domains;
 mod game;
@@ -26,9 +26,8 @@ pub mod plugins {
     pub use crate::camera::CameraPlugin;
     pub use crate::game::GamePlugin;
     pub use crate::domains::DomainPlugin;
-    pub use crate::soul::SoulPlugin;
-    pub use crate::body::BodyPlugin;
     pub use crate::splash_screan::SplashScreenPlugin;
+    pub use crate::player::PlayerPlugin;
 }
 
 mod app {

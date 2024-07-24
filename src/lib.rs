@@ -4,6 +4,7 @@ pub mod prelude {
   pub use bevy_asset_loader::prelude::*;
   pub use crate::app::*;
   pub use crate::domains::TerrainTextures;
+  pub use crate::helpers::Direction;
 }
 
 use prelude::*;
@@ -18,6 +19,7 @@ mod game;
 mod splash_screan;
 mod helpers;
 mod controles;
+mod player;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;

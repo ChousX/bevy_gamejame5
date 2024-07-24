@@ -1,8 +1,5 @@
 use crate::{
-    camera::{
-        CameraMoveEvent,
-        Direction
-    },
+    camera::CameraMoveEvent,
     prelude::*
 };
 
@@ -11,15 +8,16 @@ impl Plugin for ControlesPlugin {
     fn build(&self, app: &mut App) {
         app
             .init_state::<ControlerInputType>()
+            .init_state::<FlyCam>()
             .init_resource::<KeyboardBindings>()
-            .add_systems(
-                Update,
-                keyboard_camera_controler
-                    .run_if(
-                        in_state(ControlerInputType::KeyboardMouse)
-                            .and_then(in_state(AppState::Game)))
-            )
     ;}
+}
+
+#[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
+pub enum FlyCam{
+    Enabled,
+    #[default]
+    Disabled,
 }
 
 #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -49,13 +47,21 @@ impl Default for KeyboardBindings {
     }
 }
 
-pub fn keyboard_camera_controler(
-    keys: Res<ButtonInput<KeyCode>>,
-    keyb: Res<KeyboardBindings>,
-    mut events: EventWriter<CameraMoveEvent>,
-){
-    if keys.any_pressed(keyb.forward){ events.send(CameraMoveEvent(Direction::Forward));}
-    if keys.any_pressed(keyb.backward){ events.send(CameraMoveEvent(Direction::Backward));}
-    if keys.any_pressed(keyb.left){ events.send(CameraMoveEvent(Direction::Left));}
-    if keys.any_pressed(keyb.right){ events.send(CameraMoveEvent(Direction::Right));}
+/*
+pub trait KeyboardEventResever: Event + Sized{
+    type MyEvent: Event + Sized;
+
+    fn keyboard_controler(
+        keys: Res<ButtonInput<KeyCode>>,
+        keyb: Res<KeyboardBindings>,
+        mut events: EventWriter<Self::MyEvent>,
+    ) {
+        if keys.any_pressed(keyb.forward){ events.send(MyEvent(Direction::Forward));}
+        if keys.any_pressed(keyb.backward){ events.send(MyEvent(Direction::Backward));}
+        if keys.any_pressed(keyb.left){ events.send(MyEvent(Direction::Left));}
+        if keys.any_pressed(keyb.right){ events.send(MyEvent(Direction::Right));}
+
+    }
 }
+
+*/

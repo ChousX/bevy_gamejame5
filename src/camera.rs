@@ -1,5 +1,4 @@
 use crate::prelude::*;
-
 pub struct CameraPlugin;
 
 impl Plugin for CameraPlugin {
@@ -22,15 +21,6 @@ impl Plugin for CameraPlugin {
 
 #[derive(Component, Default)]
 pub struct MainCamera(pub Vec2);
-
-pub enum Direction {
-    Forward,
-    Backward,
-    Left,
-    Right,
-    Analog(Vec2),
-}
-
 #[derive(Event)]
 pub struct CameraMoveEvent(pub Direction);
 

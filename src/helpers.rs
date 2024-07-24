@@ -8,3 +8,13 @@ pub fn despawn_all<T: Component>(
         commands.entity(entity).despawn_recursive();
     }
 }
+
+pub enum Direction {
+    Forward,
+    Backward,
+    Left,
+    Right,
+    Analog(Vec2),
+}
+
+

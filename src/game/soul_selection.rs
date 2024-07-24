@@ -62,7 +62,7 @@ fn init_menu(
 
     commands.entity(root).add_child(menu);
 
-    for _ in 0..soul_amount.0{
+    for i in 0..soul_amount.0{
         let soul = commands.spawn((
             NodeBundle {
                 style: Style {
@@ -74,9 +74,19 @@ fn init_menu(
             },
             //add more things
         )).id();
-
         commands.entity(menu).add_child(soul);
+
+        let name_text = crate::names::LAST_NAMES[i as usize];
+        let name_node = commands.spawn(
+            TextBundle::from_section(name_text, TextStyle {
+                ..default()
+            }),
+        ).id();
+        commands.entity(menu).add_child(name_node);
     }
 }
 
-fn menu_soul_select(){}
+fn menu_soul_select(
+    mut commands: Command,
+    mut next_state: ResMut<NextState<GamePhase>>
+){}

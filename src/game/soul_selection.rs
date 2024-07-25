@@ -139,8 +139,8 @@ fn menu_soul_select(
 }
 
 fn cleanup(
-    mut nodes: Query<Entity, With<SoulSelectionMenuCleanUp>>,
-    mut buttons: Query<Entity, (With<Button>, Without<Selected>)>,
+    nodes: Query<Entity, With<SoulSelectionMenuCleanUp>>,
+    buttons: Query<Entity, (With<Button>, Without<Selected>)>,
     mut commands: Commands,
 ){
     for node in nodes.iter(){

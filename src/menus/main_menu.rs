@@ -140,6 +140,7 @@ fn setup(
             ..default()
         };
 
+        /*
         let button_icon_style = Style {
             width: Val::Px(30.0),
             // This takes the icons out of the flexbox flow, to be positioned exactly
@@ -148,6 +149,7 @@ fn setup(
             left: Val::Px(10.0),
             ..default()
         };
+        */
 
         let button_text_style = TextStyle {
             font_size: 40.0,

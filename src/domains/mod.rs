@@ -1,6 +1,13 @@
-use strum::{VariantNames, EnumString, VariantArray};
 use crate::{game::GamePhase, prelude::*};
 use bevy_ecs_tilemap::prelude::*;
+use rand::{
+    prelude::*,
+    seq::SliceRandom,
+};
+use strum::{
+    VariantArray,
+    IntoStaticStr,
+};
 
 pub struct DomainPlugin;
 impl Plugin for DomainPlugin {
@@ -29,7 +36,7 @@ pub fn add_domain(
     let tilemap_id = TilemapId(tilemap_entity);
     let tile_size = TilemapTileSize { x: 64.0, y: 32.0 };
     let grid_size = tile_size.into();
-    let domain_type = ();
+    let domain_type = DomainType::gen();
     let map_type = TilemapType::Isometric(IsoCoordSystem::Staggered);
     let TilemapSize { x: max_x, y: max_y } = map_size.clone();
     for y in 0..max_y {
@@ -68,12 +75,21 @@ pub struct TerrainTextures{
     pub tiles: Handle<Image>,
 }
 
-
-#[derive(Debug, Component, EnumString, VariantNames, VariantArray)]
+#[derive(Debug, Component,  IntoStaticStr, VariantArray, Copy, Clone, Default)]
 #[strum(serialize_all = "kebab-case")]
 pub enum DomainType{
     Island,
     Mountans,
+    #[default]
     Plains,
 }
 
+impl DomainType {
+    pub fn gen() -> Self{
+        let mut rng = thread_rng();
+        Self::VARIANTS
+            .choose(&mut rng)
+            .expect("No VARIANTS")
+            .clone()
+    }
+}

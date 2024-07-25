@@ -60,7 +60,7 @@ fn init_menu(
     commands.entity(root).add_child(menu);
     
 
-    for i in 0..body_amount.0 {
+    for _ in 0..body_amount.0 {
         let body_type = BodyType::gen_rand();
         let name_text = body_type.get_text();
         let body = commands.spawn((

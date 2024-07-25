@@ -112,6 +112,7 @@ fn update_game_time(
     if game_time.0.finished() {
         commands.remove_resource::<GameTime>();
         next_state.set(GamePhase::LifeRecap);
+        ui.send(DeleteTimeUi);
     }
 }
 

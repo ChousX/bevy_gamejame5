@@ -60,7 +60,7 @@ fn player_builder(
     let aoe = AreaOfEffect(size.0 + presence.0);
 
     //Build Player
-    let player = commands.spawn(
+    let _player = commands.spawn(
         PlayerBundle {
             root: PlayerRoot,
             pick_up_range,

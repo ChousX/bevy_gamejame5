@@ -1,7 +1,4 @@
-use crate::{
-    camera::CameraMoveEvent,
-    prelude::*
-};
+use crate::prelude::*;
 
 pub struct ControlesPlugin;
 impl Plugin for ControlesPlugin {

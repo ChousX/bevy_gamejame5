@@ -1,5 +1,9 @@
 use crate::{controles::KeyboardBindings, game::GamePhase, prelude::*};
 
+mod body_type;
+
+pub use body_type::*;
+
 pub struct BodyPlugin;
 impl Plugin for BodyPlugin{
     fn name(&self) -> &str {
@@ -27,6 +31,13 @@ impl Plugin for BodyPlugin{
                         //like if body_damage does't run can hit_point_regeneration?
                         .after(body_damage))
     ;}
+}
+
+
+#[derive(AssetCollection, Resource)]
+pub struct BodyTextures{
+    #[asset(path = "tilemaps/iso_color.png")]
+    pub test: Handle<Image>,
 }
 
 
@@ -84,6 +95,13 @@ impl  Default for HitPoints {
 }
 
 impl HitPoints {
+    pub fn new(ammount: f32) -> Self {
+        Self {
+            max: ammount,
+            current: ammount,
+        }
+    }
+
     pub fn damage(&mut self, ammount: f32) {
         //no healling form damge
         self.current -= ammount.abs();
@@ -141,6 +159,7 @@ impl Default for HitPointRegeneration{
     }
 }
 
+
 fn hit_point_regeneration(
     mut hit_points: Query<(&mut HitPoints, &HitPointRegeneration), With<BodyRoot>>,
     time: Res<Time>,
@@ -161,6 +180,7 @@ impl Default for Size{
 #[derive(Bundle, Default)]
 pub struct BodyBundle{
     pub root: BodyRoot,
+    pub body_type: BodyType,
     pub speed: Speed,
     pub hit_points: HitPoints,
     pub hit_points_regen: HitPointRegeneration,

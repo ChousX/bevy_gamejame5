@@ -34,6 +34,7 @@ impl Plugin for GamePlugin {
     ;}
 }
 
+//todo!()
 #[derive(SubStates, Clone, PartialEq, Eq, Hash, Debug, Default)]
 #[source(AppState = AppState::Game)]
 pub enum GameState{
@@ -45,9 +46,9 @@ pub enum GameState{
 #[derive(SubStates, Clone, PartialEq, Eq, Hash, Debug, Default)]
 #[source(AppState = AppState::Game)]
 pub enum GamePhase{
-    #[default]
     None,
     // Chouse a soul and move on to BodySelection
+    #[default]
     SoulSelection,
     // Chouse a body to house your chosen soul
     BodySelection,
@@ -113,3 +114,6 @@ fn update_game_time(
         next_state.set(GamePhase::LifeRecap);
     }
 }
+
+#[derive(Component, Default, Copy, Clone)]
+pub struct Selected;

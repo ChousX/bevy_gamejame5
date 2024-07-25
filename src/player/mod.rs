@@ -1,10 +1,10 @@
-use crate::prelude::*;
+use crate::{game::{GamePhase, Selected}, prelude::*};
 
 mod soul;
 mod body;
 
-use soul::*;
-use body::*;
+pub use soul::*;
+pub use body::*;
 
 pub struct PlayerPlugin;
 impl Plugin for PlayerPlugin {
@@ -13,17 +13,23 @@ impl Plugin for PlayerPlugin {
     }
 
     fn build(&self, app: &mut App) {
-        
+        app
+            .add_systems(
+                Update,
+                player_builder.run_if(in_state(GamePhase::BodySelection)))
+            .add_plugins((
+                BodyPlugin,
+                SoulPlugin,
+            ));
     }
 }
 
-#[derive(Component)]
-pub struct PlayerSelected;
-
 fn player_builder(
     mut commands: Commands,
-    selected_soul: Query<(&SoulName, &Magnetism, &Presence, Entity), (With<PlayerSelected>, With<SoulRoot>)>,
-    selected_body: Query<(&Speed, &HitPoints, &HitPointRegeneration, &Size, Entity), (With<PlayerSelected>, With<BodyRoot>)>,
+    selected_soul: Query<(&SoulName, &Magnetism, &Presence, Entity), (With<Selected>, With<SoulRoot>)>,
+    selected_body: Query<(&Speed, &HitPoints, &HitPointRegeneration, &Size, &BodyType, Entity), (With<Selected>, With<BodyRoot>)>,
+    body_textures: Res<BodyTextures>,
+    mut game_phase: ResMut<NextState<GamePhase>>,
 ){
     let (body, soul)  = if !selected_body.is_empty() && !selected_soul.is_empty() {
             (selected_body.single(), selected_soul.single())
@@ -32,7 +38,7 @@ fn player_builder(
     };
     //Get Data to Build Player
     let (name, magnetism, presence, soul_entity) = soul;
-    let (speed, hit_points, hp_regen, size, body_entity) = body;
+    let (speed, hit_points, hp_regen, size, body_type, body_entity) = body;
 
     let soul = SoulBundle {
         root: SoulRoot,
@@ -47,6 +53,7 @@ fn player_builder(
         hit_points: hit_points.clone(),
         hit_points_regen: hp_regen.clone(),
         size: size.clone(),
+        body_type: body_type.clone()
     };
 
     let pick_up_range = PickupRange(size.0 + magnetism.0);
@@ -60,6 +67,11 @@ fn player_builder(
             aoe,
             body,
             soul,
+            sprite: SpriteBundle {
+                transform: Transform::from_xyz(0.0, 0.0, 1.0),
+                texture: body_textures.test.clone(),
+                ..default()
+            },
         },
     ).id();
 
@@ -67,6 +79,8 @@ fn player_builder(
     commands.entity(body_entity).despawn_recursive();
     commands.entity(soul_entity).despawn_recursive();
 
+    //move to next phase
+    game_phase.set(GamePhase::Prepration);
 }
 
 #[derive(Component, Default)]
@@ -95,6 +109,7 @@ pub struct PlayerBundle {
     pub aoe: AreaOfEffect,
     pub soul: SoulBundle,
     pub body: BodyBundle,
+    pub sprite: SpriteBundle,
 }
 
 

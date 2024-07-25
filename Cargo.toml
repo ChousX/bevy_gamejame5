@@ -8,10 +8,8 @@ resolver = "2"
 bevy = { package = "bevy", version = "0.14.0" }
 bevy_asset_loader = "0.21.0"
 bevy_ecs_tilemap = "0.14.0"
-bevy_rand = "0.7.1"
-bevy_prng = "0.7.1"
-rand_core = "0.6.4"
 strum = { version = "0.26", features = ["derive"] }
+rand = "*"
 
 [profile.dev]
 opt-level = 1

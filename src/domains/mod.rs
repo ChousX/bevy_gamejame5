@@ -1,5 +1,5 @@
 use strum::{VariantNames, EnumString, VariantArray};
-use crate::prelude::*;
+use crate::{game::GamePhase, prelude::*};
 use bevy_ecs_tilemap::prelude::*;
 
 pub struct DomainPlugin;
@@ -11,7 +11,7 @@ impl Plugin for DomainPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_systems(
-                OnEnter(AppState::Game),
+                OnEnter(GamePhase::Prepration),
                 add_domain
             ).add_plugins(
                 TilemapPlugin

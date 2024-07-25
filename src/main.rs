@@ -20,7 +20,8 @@ fn main() {
         .add_loading_state(
             LoadingState::new(AppState::Enter)
                 .continue_to_state(AppState::MainMenu)
-                .load_collection::<TerrainTextures>(),
+                .load_collection::<TerrainTextures>()
+                .load_collection::<BodyTextures>()
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,

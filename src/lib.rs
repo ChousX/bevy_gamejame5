@@ -1,18 +1,20 @@
+#![cfg_attr(debug_assertions, allow(dead_code, unused_imports))]
+
 pub mod prelude {
   pub use bevy::prelude::*;
   pub use bevy::color::palettes::css as css;
   pub use bevy_asset_loader::prelude::*;
   pub use crate::app::*;
   pub use crate::domains::TerrainTextures;
+  pub use crate::player::BodyTextures;
   pub use crate::helpers::Direction;
+  pub use crate::player::BodyType;
 }
 
 use prelude::*;
 
 mod menus;
 mod camera;
-//mod soul;
-//mod body;
 mod names;
 mod domains;
 mod game;

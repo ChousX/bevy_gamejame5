@@ -33,6 +33,7 @@ pub struct TimeUiCleanUp;
 fn init_time_ui(
     mut commands: Commands,
     game_time: Res<GameTime>,
+    top_middle: Query<Entity, With<GameUiTopSectionMiddle>>
 ){
     let root = commands.spawn((
         NodeBundle{
@@ -51,6 +52,11 @@ fn init_time_ui(
         TextBundle::from_section(&time_text, TextStyle {..default()}),
         TimeDysplay,
     )).id();
+
+    let top_middle = top_middle.single();
+    commands.entity(top_middle).add_child(root);
+    commands.entity(root).add_child(text);
+
 }
 
 

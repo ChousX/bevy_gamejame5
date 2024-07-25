@@ -36,7 +36,7 @@ fn button_system_color(
 }
 
 fn button_system_action(
-    mut interaction_query: Query<
+    interaction_query: Query<
         (&Interaction, &MenuAction),
         (Changed<Interaction>, With<Button>),
     >,

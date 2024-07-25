@@ -30,6 +30,7 @@ impl Plugin for GamePlugin {
             .add_plugins((
                 BodySelectionPlugin,
                 SoulSelectionPlugin,
+                GameUiPlugin,
             ))
     ;}
 }
@@ -88,6 +89,20 @@ impl GameTimeMode {
 
 #[derive(Resource)]
 pub struct GameTime(pub Timer);
+
+impl GameTime {
+    pub fn time_left(&self) -> Duration {
+        self.0.remaining()
+    }
+
+    pub fn time_left_text(&self) -> String {
+        let mut secs = self.time_left().as_secs_f64();
+        let min = secs / 60.0;
+        secs = secs % 60.0;
+
+        format!("{min}:{secs}")
+    }
+}
 
 fn init_game_time(
     mut commands: Commands,

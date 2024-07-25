@@ -1,5 +1,5 @@
 use super::*;
-use crate::prelude::*;
+use crate::{helpers, prelude::*};
 
 pub struct TimeDyplayPlugin;
 impl Plugin for TimeDyplayPlugin {
@@ -14,7 +14,7 @@ impl Plugin for TimeDyplayPlugin {
                 update_time_ui.run_if(in_state(GamePhase::Tribulation)))
             .add_systems(
                 Update, 
-                time_ui_clean_up.run_if(on_event::<DeleteTimeUi>()))
+                helpers::despawn_all::<TimeUiCleanUp>.run_if(on_event::<DeleteTimeUi>()))
     ;}
 }
 
@@ -27,22 +27,39 @@ pub struct NewTimeUi;
 #[derive(Component)]
 pub struct TimeDysplay;
 
+#[derive(Component)]
+pub struct TimeUiCleanUp;
+
 fn init_time_ui(
     mut commands: Commands,
+    game_time: Res<GameTime>,
 ){
-
+    let root = commands.spawn((
+        NodeBundle{
+            style: Style {
+                width: Val::Percent(20.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            ..default()
+        },
+        TimeUiCleanUp
+    )).id();
+    
+    let time_text = game_time.time_left_text();
+    let text = commands.spawn((
+        TextBundle::from_section(&time_text, TextStyle {..default()}),
+        TimeDysplay,
+    )).id();
 }
 
-fn time_ui_clean_up(
-    mut commands: Commands,
-){
-
-}
 
 fn update_time_ui(
-    mut time_ui: Query<Entity, With<TimeDysplay>>,
+    mut time_ui: Query<&mut Text, With<TimeDysplay>>,
     game_time: Res<GameTime>,
 ){
     if !game_time.is_changed() {return;}
-    let time_ui = time_ui.single();
+    let mut time_ui = time_ui.single_mut();
+    let time_text = game_time.time_left_text();
+    *time_ui = Text::from_section(&time_text, TextStyle {..default()});
 }

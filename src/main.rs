@@ -22,6 +22,7 @@ fn main() {
                 .continue_to_state(AppState::MainMenu)
                 .load_collection::<TerrainTextures>()
                 .load_collection::<BodyTexture>()
+                .load_collection::<MobTexture>()
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,

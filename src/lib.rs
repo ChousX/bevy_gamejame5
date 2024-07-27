@@ -5,8 +5,10 @@ pub mod prelude {
   pub use bevy::color::palettes::css as css;
   pub use bevy_asset_loader::prelude::*;
   pub use crate::app::*;
-  pub use crate::domains::TerrainTextures;
   pub use crate::player::BodyType;
+  //assets
+  pub use crate::domains::TerrainTextures;
+  pub use crate::mob::MobTexture;
   pub use crate::player::BodyTexture;
 }
 
@@ -21,6 +23,7 @@ mod splash_screan;
 mod helpers;
 mod controles;
 mod player;
+mod mob;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;

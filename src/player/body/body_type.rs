@@ -148,8 +148,8 @@ pub struct BodyTexture{
 #[strum(serialize_all = "kebab-case")]
 pub enum BodyType {
     Chicken,
-    #[default]
     Crab,
+    #[default]
     Toad,
     Monkey,
     Pig,

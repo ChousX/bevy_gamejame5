@@ -64,8 +64,26 @@ fn player_builder(
     let aoe = AreaOfEffect(size.0 + presence.0);
 
     let (body_texture, texture_atlas) = match body_type {
+        BodyType::Chicken => (body_assets.chicken.clone(), TextureAtlas::from(body_assets.chicken_layout.clone())),
         BodyType::Crab => (body_assets.crab.clone(), TextureAtlas::from(body_assets.crab_layout.clone())),
-        _ => (body_assets.crab.clone(), TextureAtlas::from(body_assets.crab_layout.clone()))
+        BodyType::Toad => (body_assets.toad.clone(), TextureAtlas::from(body_assets.toad_layout.clone())),
+        BodyType::Monkey => (body_assets.monkey.clone(), TextureAtlas::from(body_assets.monkey_layout.clone())),
+        BodyType::Pig => (body_assets.pig.clone(), TextureAtlas::from(body_assets.pig_layout.clone())),
+        BodyType::Dog => (body_assets.dog.clone(), TextureAtlas::from(body_assets.dog_layout.clone())),
+        BodyType::Cow => (body_assets.cow.clone(), TextureAtlas::from(body_assets.cow_layout.clone())),
+        BodyType::Goose => (body_assets.goose.clone(), TextureAtlas::from(body_assets.goose_layout.clone())),
+        BodyType::Gorilla => (body_assets.gorilla.clone(), TextureAtlas::from(body_assets.gorilla_layout.clone())),
+        BodyType::Frog => (body_assets.frog.clone(), TextureAtlas::from(body_assets.frog_layout.clone())),
+        BodyType::Boar => (body_assets.boar.clone(), TextureAtlas::from(body_assets.boar_layout.clone())),
+        BodyType::Moose => (body_assets.moose.clone(), TextureAtlas::from(body_assets.moose_layout.clone())),
+        BodyType::Cat => (body_assets.cat.clone(), TextureAtlas::from(body_assets.cat_layout.clone())),
+        BodyType::Goat => (body_assets.goat.clone(), TextureAtlas::from(body_assets.goat_layout.clone())),
+        BodyType::Sheep => (body_assets.sheep.clone(), TextureAtlas::from(body_assets.sheep_layout.clone())),
+        BodyType::Turtle => (body_assets.turtle.clone(), TextureAtlas::from(body_assets.turtle_layout.clone())),
+        BodyType::SnowFox => (body_assets.snow_fox.clone(), TextureAtlas::from(body_assets.snow_fox_layout.clone())),
+        BodyType::Porcupine => (body_assets.porcupine.clone(), TextureAtlas::from(body_assets.porcupine_layout.clone())),
+        BodyType::Skunk => (body_assets.skunk.clone(), TextureAtlas::from(body_assets.skunk_layout.clone())),
+        BodyType::Wolf => (body_assets.wolf.clone(), TextureAtlas::from(body_assets.wolf_layout.clone())),
     };
 
     //Build Player

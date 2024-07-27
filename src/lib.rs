@@ -6,9 +6,8 @@ pub mod prelude {
   pub use bevy_asset_loader::prelude::*;
   pub use crate::app::*;
   pub use crate::domains::TerrainTextures;
-  pub use crate::player::BodyTextures;
-  pub use crate::helpers::Direction;
   pub use crate::player::BodyType;
+  pub use crate::player::BodyTexture;
 }
 
 use prelude::*;
@@ -30,6 +29,7 @@ pub mod plugins {
     pub use crate::domains::DomainPlugin;
     pub use crate::splash_screan::SplashScreenPlugin;
     pub use crate::player::PlayerPlugin;
+    pub use crate::controles::ControlesPlugin;
 }
 
 mod app {

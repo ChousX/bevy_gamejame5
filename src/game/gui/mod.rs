@@ -3,7 +3,9 @@ use super::*;
 mod stats_dysplay;
 mod time_dysplay;
 mod mini_map_dysplay;
+mod hit_points_dysplay;
 
+use hit_points_dysplay::HitPointsDysplayPlugin;
 pub use stats_dysplay::*;
 pub use time_dysplay::*;
 pub use mini_map_dysplay::*;
@@ -16,7 +18,10 @@ impl Plugin for GameUiPlugin {
             .add_systems(
                 Startup,
                 init_gui
-            )
+            ).add_plugins((
+                TimeDyplayPlugin,
+                //HitPointsDysplayPlugin
+            ))
     ;}
 }
 
@@ -130,7 +135,7 @@ fn init_gui(
             },
             ..default()
         },
-        GameUiTopSectionLeft,
+        GameUiTopSectionMiddle,
     )).id();
 
     let top_section_right = commands.spawn((
@@ -142,7 +147,7 @@ fn init_gui(
             },
             ..default()
         },
-        GameUiTopSectionLeft,
+        GameUiTopSectionRight,
     )).id();
 
     commands.entity(top_section).add_child(top_section_left);

@@ -20,7 +20,7 @@ impl Plugin for GamePlugin {
             .add_sub_state::<GameState>()
             .init_resource::<GameTimeMode>()
             .add_systems(
-                OnEnter(GamePhase::Tribulation), init_game_time)
+                OnEnter(AppState::Game), init_game_time)
             .add_systems(
                 Update, 
                 update_game_time
@@ -32,6 +32,9 @@ impl Plugin for GamePlugin {
                 SoulSelectionPlugin,
                 GameUiPlugin,
             ))
+            .add_systems(
+                OnEnter(GamePhase::Prepration), 
+                move_to_tribulation)
     ;}
 }
 
@@ -100,17 +103,15 @@ impl GameTime {
         let min = secs / 60.0;
         secs = secs % 60.0;
 
-        format!("{min}:{secs}")
+        format!("{:.0}:{:.2}", min, secs)
     }
 }
 
 fn init_game_time(
     mut commands: Commands,
     time_mode: Res<GameTimeMode>,
-    mut ui: EventWriter<NewTimeUi>
 ) {
     commands.insert_resource(GameTime(time_mode.get_time()));
-    ui.send(NewTimeUi);
 }
 
 ///If there is a game time update it 
@@ -120,16 +121,19 @@ fn update_game_time(
     mut game_time: ResMut<GameTime>,
     time: Res<Time>,
     mut next_state: ResMut<NextState<GamePhase>>,
-    mut ui: EventWriter<DeleteTimeUi>,
 ) {
     game_time.0.tick(time.delta());
 
     if game_time.0.finished() {
         commands.remove_resource::<GameTime>();
         next_state.set(GamePhase::LifeRecap);
-        ui.send(DeleteTimeUi);
     }
 }
 
 #[derive(Component, Default, Copy, Clone)]
 pub struct Selected;
+
+
+fn move_to_tribulation(mut next: ResMut<NextState<GamePhase>>){
+    next.set(GamePhase::Tribulation)
+}

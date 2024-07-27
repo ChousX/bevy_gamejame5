@@ -1,8 +1,10 @@
 use crate::{controles::KeyboardBindings, game::GamePhase, prelude::*};
 
+mod hit_points;
 mod body_type;
 
 pub use body_type::*;
+pub use hit_points::*;
 
 pub struct BodyPlugin;
 impl Plugin for BodyPlugin{
@@ -30,16 +32,11 @@ impl Plugin for BodyPlugin{
                         //I really don't know how after works
                         //like if body_damage does't run can hit_point_regeneration?
                         .after(body_damage))
+            .add_systems(
+                Update, 
+                update_body_texutes_from_type.run_if(in_state(AppState::Game)))
     ;}
 }
-
-
-#[derive(AssetCollection, Resource)]
-pub struct BodyTextures{
-    #[asset(path = "tilemaps/iso_color.png")]
-    pub test: Handle<Image>,
-}
-
 
 #[derive(Component, Default, Clone, Copy)]
 pub struct BodyRoot;
@@ -61,10 +58,12 @@ fn move_body(
     let (mut pos, speed) = bodys_q.single_mut();
     let mut dir = Vec3::ZERO;
     if keys.any_pressed(keyb.forward){ 
-        dir += pos.forward().as_vec3();
+        let mut temp = pos.forward().as_vec3();
+        dir += Vec3::new(temp.x, -temp.z, 0.0);
     }
     if keys.any_pressed(keyb.backward){ 
-        dir += pos.back().as_vec3();
+        let mut temp = pos.back().as_vec3();
+        dir += Vec3::new(temp.x, -temp.z, 0.0);
     }
     if keys.any_pressed(keyb.left){
         dir += pos.left().as_vec3();
@@ -77,50 +76,6 @@ fn move_body(
     let z = pos.translation.z;
     pos.translation += v;
     pos.translation.z = z;
-}
-
-#[derive(Component, Clone, Copy)]
-pub struct HitPoints{
-    pub max: f32,
-    pub current: f32,
-}
-impl  Default for HitPoints {
-    fn default () -> Self{
-        const VAL: f32 = 100.0;
-        Self{
-            max: VAL,
-            current: VAL,
-        }
-    }
-}
-
-impl HitPoints {
-    pub fn new(ammount: f32) -> Self {
-        Self {
-            max: ammount,
-            current: ammount,
-        }
-    }
-
-    pub fn damage(&mut self, ammount: f32) {
-        //no healling form damge
-        self.current -= ammount.abs();
-    }
-
-    pub fn is_dead(&self) -> bool{
-        self.current < 0.0
-    }
-
-    pub fn is_full(&self) -> bool {
-        self.current >= self.max
-    }
-
-    pub fn heal(&mut self, ammount: f32) {
-        self.current += ammount;
-        if self.current > self.max {
-            self.current = self.max;
-        }
-    }
 }
 
 #[derive(Event, Default, Copy, Clone, Debug)]

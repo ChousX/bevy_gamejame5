@@ -13,7 +13,9 @@ impl Plugin for BodySelectionPlugin {
             ).add_systems(
                 Update, 
                 menu_selection.run_if(in_state(GamePhase::BodySelection))
-            );
+            ).add_systems(
+                OnExit(GamePhase::BodySelection), 
+                cleanup);
     }
 }
 
@@ -114,4 +116,15 @@ fn menu_selection(
     }
 }
 
-fn cleanup(){}
+fn cleanup(
+    marked: Query<Entity, With<BodySelectionMenuCleanUp>>,
+    nodes: Query<Entity, (With<BodyRoot>, With<Node>)>,
+    mut commands: Commands,
+){
+    for e in marked.iter(){
+        commands.entity(e).despawn();//_recursive();
+    }    
+    for e in nodes.iter() {
+        commands.entity(e).despawn();
+    }
+}

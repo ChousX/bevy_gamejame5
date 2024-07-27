@@ -5,31 +5,22 @@ pub struct TimeDyplayPlugin;
 impl Plugin for TimeDyplayPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_event::<NewTimeUi>()
             .add_systems(
-                Update,
-                init_time_ui.run_if(on_event::<NewTimeUi>()))
+                OnEnter(GamePhase::Tribulation),
+                init_time_ui)
             .add_systems(
                 Update, 
                 update_time_ui.run_if(in_state(GamePhase::Tribulation)))
-            .add_systems(
-                Update, 
-                helpers::despawn_all::<TimeUiCleanUp>.run_if(on_event::<DeleteTimeUi>()))
+            //.add_systems(
+                //Update, 
+                //helpers::despawn_all::<TimeUiCleanUp>.run_if(on_event::<DeleteTimeUi>()))
     ;}
 }
-
-#[derive(Event)]
-pub struct DeleteTimeUi;
-
-#[derive(Event)]
-pub struct NewTimeUi;
-
-#[derive(Component)]
-pub struct TimeDysplay;
-
 #[derive(Component)]
 pub struct TimeUiCleanUp;
 
+#[derive(Component)]
+pub struct TimeDysplay;
 fn init_time_ui(
     mut commands: Commands,
     game_time: Res<GameTime>,
@@ -64,8 +55,8 @@ fn update_time_ui(
     mut time_ui: Query<&mut Text, With<TimeDysplay>>,
     game_time: Res<GameTime>,
 ){
-    if !game_time.is_changed() {return;}
-    let mut time_ui = time_ui.single_mut();
-    let time_text = game_time.time_left_text();
-    *time_ui = Text::from_section(&time_text, TextStyle {..default()});
+    if let Ok(mut time_ui) = time_ui.get_single_mut(){
+        let time_text = game_time.time_left_text();
+        *time_ui = Text::from_section(&time_text, TextStyle {..default()});
+    }
 }

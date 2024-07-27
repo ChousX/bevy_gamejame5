@@ -1,4 +1,4 @@
-use crate::{game::{GamePhase, Selected}, prelude::*};
+use crate::{game::{GamePhase, Selected}, helpers::AnimationTimer, prelude::*};
 
 mod soul;
 mod body;
@@ -14,6 +14,10 @@ impl Plugin for PlayerPlugin {
 
     fn build(&self, app: &mut App) {
         app
+            .add_loading_state(
+                LoadingState::new(AppState::Enter)
+
+            )
             .add_systems(
                 Update,
                 player_builder.run_if(in_state(GamePhase::BodySelection)))
@@ -28,8 +32,8 @@ fn player_builder(
     mut commands: Commands,
     selected_soul: Query<(&SoulName, &Magnetism, &Presence, Entity), (With<Selected>, With<SoulRoot>)>,
     selected_body: Query<(&Speed, &HitPoints, &HitPointRegeneration, &Size, &BodyType, Entity), (With<Selected>, With<BodyRoot>)>,
-    body_textures: Res<BodyTextures>,
     mut game_phase: ResMut<NextState<GamePhase>>,
+    body_assets: Res<BodyTexture>,
 ){
     let (body, soul)  = if !selected_body.is_empty() && !selected_soul.is_empty() {
             (selected_body.single(), selected_soul.single())
@@ -59,8 +63,13 @@ fn player_builder(
     let pick_up_range = PickupRange(size.0 + magnetism.0);
     let aoe = AreaOfEffect(size.0 + presence.0);
 
+    let (body_texture, texture_atlas) = match body_type {
+        BodyType::Crab => (body_assets.crab.clone(), TextureAtlas::from(body_assets.crab_layout.clone())),
+        _ => (body_assets.crab.clone(), TextureAtlas::from(body_assets.crab_layout.clone()))
+    };
+
     //Build Player
-    let _player = commands.spawn(
+    let _player = commands.spawn((
         PlayerBundle {
             root: PlayerRoot,
             pick_up_range,
@@ -69,11 +78,13 @@ fn player_builder(
             soul,
             sprite: SpriteBundle {
                 transform: Transform::from_xyz(0.0, 0.0, 1.0),
-                texture: body_textures.test.clone(),
+                texture: body_texture,
                 ..default()
             },
         },
-    ).id();
+        texture_atlas,
+        AnimationTimer::default(),
+    )).id();
 
     //Despawn selected 
     commands.entity(body_entity).despawn_recursive();

@@ -21,7 +21,7 @@ fn main() {
             LoadingState::new(AppState::Enter)
                 .continue_to_state(AppState::MainMenu)
                 .load_collection::<TerrainTextures>()
-                .load_collection::<BodyTextures>()
+                .load_collection::<BodyTexture>()
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,
@@ -29,6 +29,7 @@ fn main() {
                 DomainPlugin,
                 SplashScreenPlugin,
                 PlayerPlugin,
+                ControlesPlugin,
         ))
         .run();
 }

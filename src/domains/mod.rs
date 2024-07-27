@@ -9,6 +9,9 @@ use strum::{
     IntoStaticStr,
 };
 
+mod wfc;
+pub use wfc::*;
+
 pub struct DomainPlugin;
 impl Plugin for DomainPlugin {
     fn name(&self) -> &str {

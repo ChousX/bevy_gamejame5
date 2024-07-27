@@ -30,14 +30,14 @@ pub fn add_domain(
     mut commands: Commands,
     assets: Res<TerrainTextures>
 ) {
-    let map_size = TilemapSize { x: 10, y: 10 };
+    let map_size = TilemapSize { x: 70, y: 70 };
     let mut tile_storage = TileStorage::empty(map_size);
     let tilemap_entity = commands.spawn_empty().id();
     let tilemap_id = TilemapId(tilemap_entity);
-    let tile_size = TilemapTileSize { x: 64.0, y: 32.0 };
+    let tile_size = TilemapTileSize { x: 16.0, y: 16.0 };
     let grid_size = tile_size.into();
     let domain_type = DomainType::gen();
-    let map_type = TilemapType::Isometric(IsoCoordSystem::Staggered);
+    let map_type = TilemapType::Square;
     let TilemapSize { x: max_x, y: max_y } = map_size.clone();
     for y in 0..max_y {
         for x in 0..max_x {
@@ -45,7 +45,7 @@ pub fn add_domain(
             let tile = commands.spawn((
                     TileBundle {
                         position: tile_pos,
-                        texture_index: TileTextureIndex(0),
+                        texture_index: TileTextureIndex(x + y),
                         tilemap_id: tilemap_id.clone(),
                         visible: TileVisible(true),
                         ..default()
@@ -71,7 +71,7 @@ pub fn add_domain(
 
 #[derive(AssetCollection, Resource)]
 pub struct TerrainTextures{
-    #[asset(path = "tilemaps/iso_color.png")]
+    #[asset(path = "tilemaps/tileset.png")]
     pub tiles: Handle<Image>,
 }
 

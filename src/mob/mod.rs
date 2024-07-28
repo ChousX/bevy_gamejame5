@@ -1,9 +1,11 @@
 use crate::prelude::*;
 
 mod mob_type;
+mod spawner;
 
 use bevy::ecs::component::StorageType;
 pub use mob_type::*;
+use spawner::MobSpawnerPlugin;
 
 pub struct MobPlugin;
 impl Plugin for MobPlugin{
@@ -13,6 +15,9 @@ impl Plugin for MobPlugin{
     fn build(&self, app: &mut App) {
         app
             .init_resource::<MobCount>()
+            .add_plugins((
+                    MobSpawnerPlugin
+            ))
     ;}
 }
 

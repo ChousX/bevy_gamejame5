@@ -6,6 +6,7 @@ impl Plugin for DifficultyPlugin{
     fn build(&self, app: &mut App) {
         app
             .init_state::<DifficultyMode>()
+            .init_resource::<Difficulty>()
             .init_resource::<DifficultyRampTimer>()
             .add_systems(
                 OnEnter(GamePhase::SoulSelection), 
@@ -48,6 +49,7 @@ fn apply_difficulty_mode_to_difficulty_starting_val(
     difficulty.0 = val;
 }
 
+#[derive(Resource, Default)]
 pub struct DifficultyRampTimer{
     pub timer: Timer,
     pub amount: u64,
@@ -64,7 +66,7 @@ fn init_difficulty_ramp(
     mut ramp_timer: ResMut<DifficultyRampTimer>,
     mode: Res<State<DifficultyMode>>,
 ){
-    let mode_new = match *mode{
+    let mode_new = match mode.get(){
         DifficultyMode::Easy=> DifficultyRampTimer {
             timer: Timer::from_seconds(60.0, TimerMode::Repeating),
             amount: 1,

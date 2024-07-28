@@ -99,6 +99,30 @@ pub struct MobTexture{
     #[asset(path = "sprites/SwampTroll.png")]
     pub swamp_troll: Handle<Image>,
 }
+
+impl MobTexture {
+    pub fn get(&self, mob_type: &MobType) -> (Handle<Image>, Handle<TextureAtlasLayout>) {
+        use MobType::*;
+        match *mob_type{
+            Grimlock => (self.grimlock.clone(), self.grimlock_layout.clone()),
+            Eye => (self.eye.clone(), self.eye_layout.clone()),
+            Ogre => (self.ogre.clone(), self.ogre_layout.clone()),
+            CrimsonSlaad => (self.crimson_slaad.clone(), self.crimson_slaad_layout.clone()),
+            Cyclops => (self.cyclops.clone(), self.cyclops_layout.clone()),
+            Slime => (self.slime.clone(), self.slime_layout.clone()),
+            Myconid => (self.myconid.clone(), self.myconid_layout.clone()),
+            Ettin => (self.ettin.clone(), self.ettin_layout.clone()),
+            MurkySlaad => (self.murky_slaad.clone(), self.murky_slaad_layout.clone()),
+            Jelly => (self.jelly.clone(), self.jelly_layout.clone()),
+            Watcher => (self.watcher.clone(), self.watcher_layout.clone()),
+            RedCap => (self.red_cap.clone(), self.red_cap_layout.clone()),
+            Mushroom => (self.mushroom.clone(), self.mushroom_layout.clone()),
+            StoneTroll => (self.stone_troll.clone(), self.stone_troll_layout.clone()),
+            SwampTroll => (self.swamp_troll.clone(), self.swamp_troll_layout.clone()),
+        }
+    }
+}
+
 #[derive(Debug, Component,  IntoStaticStr, VariantArray, Copy, Clone, Default)]
 #[strum(serialize_all = "kebab-case")]
 pub enum MobType{

@@ -32,6 +32,7 @@ fn main() {
                 PlayerPlugin,
                 ControlesPlugin,
                 CursorPlugin,
+                MobPlugin,
         ))
         .run();
 }

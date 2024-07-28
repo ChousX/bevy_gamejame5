@@ -1,5 +1,5 @@
-use bevy::core_pipeline::deferred;
 use body_selection::BodySelectionPlugin;
+use difficulty::DifficultyPlugin;
 use soul_selection::SoulSelectionPlugin;
 
 use crate::prelude::*;
@@ -9,6 +9,7 @@ use std::time::Duration;
 mod gui;
 mod soul_selection;
 mod body_selection;
+mod difficulty;
 
 use gui::*;
 
@@ -31,6 +32,7 @@ impl Plugin for GamePlugin {
                 BodySelectionPlugin,
                 SoulSelectionPlugin,
                 GameUiPlugin,
+                DifficultyPlugin
             ))
             .add_systems(
                 OnEnter(GamePhase::Prepration), 

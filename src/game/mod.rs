@@ -10,6 +10,7 @@ mod gui;
 mod soul_selection;
 mod body_selection;
 mod difficulty;
+mod wave;
 
 use gui::*;
 

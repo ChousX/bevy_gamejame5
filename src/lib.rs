@@ -8,7 +8,7 @@ pub mod prelude {
   pub use crate::app::*;
   pub use crate::player::BodyType;
   pub use crate::cursor::CursorPosition;
-  pub use crate::mob::MobCount;
+  pub use crate::mob::{MobCount, MobType};
   pub use crate::game::GamePhase;
   //assets
   pub use crate::domains::TerrainTextures;

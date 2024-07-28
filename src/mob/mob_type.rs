@@ -144,6 +144,28 @@ pub enum MobType{
     SwampTroll,
 }
 
+impl MobType {
+    fn get_mob_with_difficulty(dif: u64) -> Self{
+        use MobType::*;
+        match dif{
+             0..5 => Eye,
+             5..10 => Jelly,
+            10..15 => Slime,
+            15..20 => Grimlock,
+            20..25 => Ogre,
+            25..30 => RedCap,
+            30..35 => Mushroom,
+            35..40 => Watcher,
+            40..45 => SwampTroll,
+            45..50 => CrimsonSlaad,
+            50..55 => Cyclops,
+            55..60 => StoneTroll,
+            60..65 => Ettin,
+            65..70 => MurkySlaad,
+            70..   => Myconid,
+        }
+    }
+}
 
 
 pub fn update_mob_texutes_from_type(

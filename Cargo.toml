@@ -10,6 +10,7 @@ bevy_asset_loader = {version  = "0.21.0", features  = ["2d"]}
 bevy_ecs_tilemap = "0.14.0"
 strum = { version = "0.26", features = ["derive"] }
 rand = "*"
+arr_macro = "0.2.1"
 
 [profile.dev]
 opt-level = 1

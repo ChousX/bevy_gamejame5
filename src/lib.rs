@@ -1,4 +1,5 @@
 #![cfg_attr(debug_assertions, allow(dead_code, unused_imports))]
+use arr_macro::arr;
 
 pub mod prelude {
   pub use bevy::prelude::*;
@@ -6,6 +7,7 @@ pub mod prelude {
   pub use bevy_asset_loader::prelude::*;
   pub use crate::app::*;
   pub use crate::player::BodyType;
+  pub use crate::cursor::CursorPosition;
   //assets
   pub use crate::domains::TerrainTextures;
   pub use crate::mob::MobTexture;
@@ -24,6 +26,7 @@ mod helpers;
 mod controles;
 mod player;
 mod mob;
+mod cursor;
 
 pub mod plugins {
     pub use crate::menus::MenuPlugin;
@@ -33,6 +36,7 @@ pub mod plugins {
     pub use crate::splash_screan::SplashScreenPlugin;
     pub use crate::player::PlayerPlugin;
     pub use crate::controles::ControlesPlugin;
+    pub use crate::cursor::CursorPlugin;
 }
 
 mod app {

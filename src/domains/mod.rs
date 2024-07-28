@@ -10,6 +10,12 @@ use strum::{
 };
 
 mod wfc;
+mod editer;
+
+mod tile_picker;
+pub use tile_picker::*;
+
+pub use editer::*;
 pub use wfc::*;
 
 pub struct DomainPlugin;
@@ -21,11 +27,12 @@ impl Plugin for DomainPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_systems(
-                OnEnter(GamePhase::Prepration),
+                OnEnter(AppState::Game),
                 add_domain
-            ).add_plugins(
-                TilemapPlugin
-            )
+            ).add_plugins((
+                TilemapPlugin,
+                TilePickerPlugin,
+            ))
     ;}
 }
 

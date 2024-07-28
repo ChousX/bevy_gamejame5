@@ -31,6 +31,7 @@ fn main() {
                 SplashScreenPlugin,
                 PlayerPlugin,
                 ControlesPlugin,
+                CursorPlugin,
         ))
         .run();
 }

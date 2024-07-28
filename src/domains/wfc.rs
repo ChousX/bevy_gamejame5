@@ -1,12 +1,19 @@
 use bevy::utils::HashSet;
 
 use crate::prelude::*;
-use std::collections::hash_set::Iter as SetIter;
+
+use arr_macro::arr;
 
 pub const TILE_COUNT: usize = 12 * 16;
 
 pub struct WFCBuilder{
-    pub arena: [WFCNode; TILE_COUNT],
+    pub arena: Vec<WFCNode> ,
+}
+impl Default for WFCBuilder {
+    fn default() -> Self{
+        let arena = vec![WFCNode::default(); TILE_COUNT];
+        Self { arena }
+    }
 }
 
 impl WFCBuilder {
@@ -97,7 +104,7 @@ fn index(x: usize, y: usize, max_x: usize) -> usize{
     y * max_x + x
 }
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct WFCNode{
     pub left: HashSet<usize>,
     pub right: HashSet<usize>,
@@ -105,3 +112,42 @@ pub struct WFCNode{
     pub down: HashSet<usize>,
 }
 
+pub struct WFCOutput{
+    arena: Vec<WFCOutputNode> 
+}
+impl Default for WFCOutput {
+    fn default() -> Self{
+        let arena = vec![WFCOutputNode::default(); TILE_COUNT];
+        Self{
+            arena
+        }
+    }
+}
+
+impl WFCOutput {
+    pub fn from_builder(builder: &WFCBuilder) -> Self{
+        let mut output = Self::default();
+        for i in 0..TILE_COUNT{
+            let left = builder.get_left(i).iter().map(|x|{*x}).collect();
+            let right = builder.get_right(i).iter().map(|x|{*x}).collect();
+            let up = builder.get_up(i).iter().map(|x|{*x}).collect();
+            let down = builder.get_down(i).iter().map(|x|{*x}).collect();
+
+            output.arena[i] = WFCOutputNode {
+                left,
+                right,
+                up,
+                down
+            };
+        }
+        output
+    }
+}
+
+#[derive(Default, Clone)]
+pub struct WFCOutputNode{
+    pub left: Vec<usize>,
+    pub right: Vec<usize>,
+    pub up: Vec<usize>,
+    pub down: Vec<usize>
+}

@@ -1,6 +1,6 @@
 use body_selection::BodySelectionPlugin;
-use difficulty::DifficultyPlugin;
 use soul_selection::SoulSelectionPlugin;
+use wave::WavePlugin;
 
 use crate::prelude::*;
 use std::time::Duration;
@@ -12,6 +12,7 @@ mod body_selection;
 mod difficulty;
 mod wave;
 
+pub use difficulty::{Difficulty, DifficultyPlugin};
 use gui::*;
 
 pub struct GamePlugin;
@@ -33,7 +34,8 @@ impl Plugin for GamePlugin {
                 BodySelectionPlugin,
                 SoulSelectionPlugin,
                 GameUiPlugin,
-                DifficultyPlugin
+                DifficultyPlugin,
+                WavePlugin,
             ))
             .add_systems(
                 OnEnter(GamePhase::Prepration), 

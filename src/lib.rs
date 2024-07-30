@@ -1,5 +1,4 @@
 #![cfg_attr(debug_assertions, allow(dead_code, unused_imports))]
-use arr_macro::arr;
 
 pub mod prelude {
   pub use bevy::prelude::*;
@@ -8,8 +7,8 @@ pub mod prelude {
   pub use crate::app::*;
   pub use crate::player::BodyType;
   pub use crate::cursor::CursorPosition;
-  pub use crate::mob::{MobCount, MobType};
-  pub use crate::game::GamePhase;
+  pub use crate::mob::{MobCount, MobType, SpawnMob};
+  pub use crate::game::{GamePhase, Difficulty};
   //assets
   pub use crate::domains::TerrainTextures;
   pub use crate::mob::MobTexture;

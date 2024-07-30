@@ -145,7 +145,7 @@ pub enum MobType{
 }
 
 impl MobType {
-    fn get_mob_with_difficulty(dif: u64) -> Self{
+    pub fn from_difficulty(dif: u64) -> Self{
         use MobType::*;
         match dif{
              0..5 => Eye,

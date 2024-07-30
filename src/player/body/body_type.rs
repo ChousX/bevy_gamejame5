@@ -179,28 +179,29 @@ impl BodyType {
 
     pub fn gen_speed(&self) -> Speed {
         use BodyType::*;
-        match *self {
-            Chicken => Speed(5.0),
-            Crab=> Speed(7.0),
-            Toad=> Speed(5.0),
-            Monkey => Speed(8.0),
-            Pig => Speed(10.0),
-            Dog => Speed(14.0),
-            Cow => Speed(6.0),
-            Goose => Speed(10.0),
-            Gorilla => Speed(9.0),
-            Frog => Speed(6.0),
-            Boar => Speed(9.0),
-            Moose => Speed(12.0),
-            Cat => Speed(11.0),
-            Goat => Speed(8.0),
-            Sheep => Speed(7.0),
-            Turtle => Speed(1.0),
-            SnowFox => Speed(16.0),
-            Porcupine => Speed(3.0),
-            Skunk => Speed(6.0),
-            Wolf => Speed(15.0),
-        }
+        let out = match *self {
+            Chicken => 5.0,
+            Crab=> 7.0,
+            Toad=> 5.0,
+            Monkey => 8.0,
+            Pig => 10.0,
+            Dog => 14.0,
+            Cow => 6.0,
+            Goose => 10.0,
+            Gorilla => 9.0,
+            Frog => 6.0,
+            Boar => 9.0,
+            Moose => 12.0,
+            Cat => 11.0,
+            Goat => 8.0,
+            Sheep => 7.0,
+            Turtle => 1.0,
+            SnowFox => 16.0,
+            Porcupine => 3.0,
+            Skunk => 6.0,
+            Wolf => 15.0,
+        };
+        Speed(out * 3.5)
     }
 
     pub fn gen_hp(&self) -> HitPoints {
@@ -290,7 +291,7 @@ pub fn update_body_texutes_from_type(
 ){
     for (body_type, mut timer, mut texture) in sprites.iter_mut() {
         let texture_num = match *body_type {
-            BodyType::Crab => 4,
+            BodyType::Gorilla | BodyType::Moose => 8,
             _ => 4,
         };
 

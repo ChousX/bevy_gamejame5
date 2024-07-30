@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::{player::{BodyDamageEvent, PlayerRoot}, prelude::*};
 
 mod mob_type;
 mod spawner;
@@ -6,6 +6,7 @@ mod spawner;
 use bevy::ecs::component::StorageType;
 pub use mob_type::*;
 use spawner::MobSpawnerPlugin;
+pub use spawner::SpawnMob;
 
 pub struct MobPlugin;
 impl Plugin for MobPlugin{
@@ -40,6 +41,31 @@ impl Component for Mob{
         });
     }
 }
+
+#[derive(Component, Default, Clone, Copy)]
+pub struct MobSeed(pub f32);
+
+#[derive(Component, Default, Clone, Copy)]
+pub struct Melee{
+    damge: f32
+}
+
+fn melee_move(
+    mut units: Query<(&mut Transform, &MobSeed), With<Melee>>,
+    player_root: Query<&Transform, (Without<Melee>, With<PlayerRoot>)>,
+    time: Res<Time>,
+){
+    let p0 = player_root.single().xy();
+    for (&mut transform, speed) in units.iter_mut(){
+        let p1 = transformer.translation.xy();
+        transform.translation = (p0 - p1).normalize() * speed.0 * time.delta_seconds();
+    }
+}
+
+fn melle_attack(
+    units: Query<(&Transform, Entity, &Melee)>,
+    attack_event: EventWriter<BodyDamageEvent>,
+){}
 
 #[derive(Bundle, Default)]
 pub struct MobBundle{

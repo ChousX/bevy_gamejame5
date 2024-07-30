@@ -82,7 +82,7 @@ fn move_body(
 pub struct DeathEvent;
 
 #[derive(Event, Default, Copy, Clone, Debug)]
-pub struct BodyDamageEvent(f32);
+pub struct BodyDamageEvent(f32, Entity);
 
 fn body_damage(
     mut hit_points: Query<&mut HitPoints, With<BodyRoot>>,
@@ -90,7 +90,7 @@ fn body_damage(
     mut death: EventWriter<DeathEvent>,
 ) {
     let mut hit_points = hit_points.single_mut();
-    for BodyDamageEvent(ammount) in damage_events.read(){
+    for BodyDamageEvent(ammount, entity) in damage_events.read(){
         hit_points.damage(*ammount);
         if hit_points.is_dead() {
             death.send(DeathEvent);

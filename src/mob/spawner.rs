@@ -47,10 +47,42 @@ fn mob_spawner(
     use SpawnMob::*;
     const Z: f32 = 0.9;
     for event in events.read(){
+
+        fn additional_bundle(mob: &MobType, id: Entity, commands: &mut Commands){
+            use MobType::*;
+            let mut entity = commands.entity(id);
+            match *mob{
+                Grimlock => {
+                },
+                Eye => {
+ 
+                },
+                Ogre => {},
+                CrimsonSlaad => {},
+                Cyclops => {},
+                Slime => {},
+                Myconid => {},
+                Ettin => {},
+                MurkySlaad => {},
+                Jelly => {},
+                Watcher => {},
+                RedCap => {},
+                Mushroom => {},
+                StoneTroll => {},
+                SwampTroll => {},
+            }; 
+            entity.insert(
+                (
+                    Melee{ damage: 1.0 },
+                    MobSpeed(10.0)
+                    )
+            );
+        }
+
         match event{
             Single { mob_type, pos } => {
                 let (texture, layout) = textures.get(&mob_type);
-                commands.spawn((
+                let id =commands.spawn((
                     MobBundle {
                         sprite: SpriteBundle{
                             texture,
@@ -61,7 +93,8 @@ fn mob_spawner(
                     },
                     layout,
                     AnimationTimer::default()
-                ));
+                )).id();
+                additional_bundle(mob_type, id, &mut commands);
             },
             Rectangle { mob_type, pos, size } => {
                 let mut entity_to_spawn = Vec::new();

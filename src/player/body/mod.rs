@@ -81,7 +81,7 @@ fn move_body(
 #[derive(Event, Default, Copy, Clone, Debug)]
 pub struct DeathEvent;
 
-#[derive(Event, Default, Copy, Clone, Debug)]
+#[derive(Event, Copy, Clone, Debug)]
 pub struct BodyDamageEvent(f32, Entity);
 
 fn body_damage(

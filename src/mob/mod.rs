@@ -16,9 +16,13 @@ impl Plugin for MobPlugin{
     fn build(&self, app: &mut App) {
         app
             .init_resource::<MobCount>()
-            .add_plugins((
+            .add_plugins(
                     MobSpawnerPlugin
-            ))
+            )
+            .add_systems(
+                Update, 
+                melee_move.run_if(in_state(GamePhase::Tribulation))
+            )
     ;}
 }
 
@@ -43,22 +47,23 @@ impl Component for Mob{
 }
 
 #[derive(Component, Default, Clone, Copy)]
-pub struct MobSeed(pub f32);
+pub struct MobSpeed(pub f32);
 
 #[derive(Component, Default, Clone, Copy)]
 pub struct Melee{
-    damge: f32
+    damage: f32
 }
 
 fn melee_move(
-    mut units: Query<(&mut Transform, &MobSeed), With<Melee>>,
+    mut units: Query<(&mut Transform, &MobSpeed), With<Melee>>,
     player_root: Query<&Transform, (Without<Melee>, With<PlayerRoot>)>,
     time: Res<Time>,
 ){
-    let p0 = player_root.single().xy();
-    for (&mut transform, speed) in units.iter_mut(){
-        let p1 = transformer.translation.xy();
-        transform.translation = (p0 - p1).normalize() * speed.0 * time.delta_seconds();
+    let p0 = player_root.single().translation.xy();
+    for (mut transform, speed) in units.iter_mut(){
+        let p1 = transform.translation.xy();
+        transform.translation += 
+            ((p0 - p1).normalize() * speed.0 * time.delta_seconds()).extend(0.9);
     }
 }
 

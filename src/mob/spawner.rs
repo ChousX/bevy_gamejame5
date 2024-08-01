@@ -13,9 +13,6 @@ impl Plugin for MobSpawnerPlugin{
             .add_systems(
                 Update, 
                 mob_spawner.run_if(on_event::<SpawnMob>()))
-            .add_systems(
-                OnEnter(GamePhase::Tribulation), 
-                spawn_test)
     ;}
 }
 
@@ -126,10 +123,4 @@ fn mob_spawner(
             }
         }
     }
-}
-
-fn spawn_test(
-    mut out: EventWriter<SpawnMob>,
-){
-    out.send(SpawnMob::Rectangle { mob_type: MobType::Eye, pos: Vec2::new(1.0, 1.0), size: UVec2::new(2,2) });
 }

@@ -82,7 +82,7 @@ fn move_body(
 pub struct DeathEvent;
 
 #[derive(Event, Copy, Clone, Debug)]
-pub struct BodyDamageEvent(f32, Entity);
+pub struct BodyDamageEvent(pub f32, pub Entity);
 
 fn body_damage(
     mut hit_points: Query<&mut HitPoints, With<BodyRoot>>,

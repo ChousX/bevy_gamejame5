@@ -21,8 +21,12 @@ impl Plugin for MobPlugin{
             )
             .add_systems(
                 Update, 
-                (melee_move, melle_attack).chain().distributive_run_if(in_state(GamePhase::Tribulation))
+                (melee_move, melle_attack)
+                    .chain()
+                    .distributive_run_if(in_state(GamePhase::Tribulation))
             )
+            .add_systems(
+                Update, count_change)
 
     ;}
 }
@@ -47,6 +51,14 @@ impl Component for Mob{
     }
 }
 
+fn count_change(
+    count: Res<MobCount>
+){
+    if count.is_changed() {
+        dbg!(count.0);
+    }
+}
+
 #[derive(Component, Default, Clone, Copy)]
 pub struct MobSpeed(pub f32);
 
@@ -67,7 +79,7 @@ fn melee_move(
     for (mut transform, speed) in units.iter_mut(){
         let p1 = transform.translation.xy();
         transform.translation += 
-            ((p0 - p1).normalize() * speed.0 * time.delta_seconds()).extend(0.9);
+            ((p0 - p1).normalize() * speed.0 * time.delta_seconds()).extend(0.0);
     }
 }
 
@@ -78,7 +90,8 @@ fn melle_attack(
 ){
     let (player_tans, Size(player_size)) = if let Ok(t) = player_root.get_single() {t} else {return;};
     for (mob_trans, id, melee, MobSize(mob_size)) in units.iter(){
-        if is_in_circle(player_tans.translation.xy(), player_size + mob_size, mob_trans) {
+        if is_in_circle(
+            player_tans.translation.xy(), player_size + mob_size, mob_trans.translation.xy()) {
             attack_event.send(BodyDamageEvent(melee.damage, id));
         }
     }

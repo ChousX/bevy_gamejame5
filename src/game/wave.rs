@@ -67,7 +67,6 @@ fn update_wave_timer(
 ){
     wave_timer.0.tick(time.delta());
     if wave_timer.0.finished(){
-        dbg!(mob_count.0);
         let mut rng = thread_rng();
         wave_timer.0 = WaveTimer::timer_from_dif(difficulty.0);
         let body_pos = body_pos.single().translation.xy();

@@ -1,25 +1,49 @@
 use crate::prelude::*;
 use bevy_asset_loader::prelude::*;
+use std::time::Duration;
+
+mod spawner;
+mod texture;
+mod skill_effect_duration;
+
+pub use spawner::*;
+pub use texture::*;
+pub use skill_effect_duration::*;
 
 pub struct SkillPlugin;
 impl Plugin for SkillPlugin{
     fn build(&self, app: &mut App) {
         app
-            .init_resource::<SkillTexture>()
+            .add_event::<SpawnSkill>()
+            .add_event::<SpawnSkillEffect>()
+            .add_systems(
+                Update, 
+                skill_effect_entity_remover.run_if(in_state(AppState::Game)))
+            .add_systems(
+                Update, 
+                (
+                    spawn_skill.run_if(on_event::<SpawnSkill>()),
+                    spawn_skill_effect.run_if(on_event::<SpawnSkillEffect>())
+            ))
     ;}
 }
 
-#[derive(AssetCollection, Resource)]
-pub struct SkillTexture{
-    #[asset(texture_atlas_layout(tile_size_x = 64, tile_size_y = 64, columns = 17, rows = 1))]
-    pub boom_layout: Handle<TextureAtlasLayout>,
-
-    #[asset(image(sampler = nearest))]
-    #[asset(path = "skills/boom.png")]
-    pub boom_texture: Handle<Image>,
+#[derive(Component, Copy, Clone)]
+pub enum SkillTarget{
+    Entity(Entity),
+    Position(Vec2),
 }
 
-pub struct SkillBundle{
-    pub sprite: SpriteBundle,
+#[derive(Component, Clone)]
+pub struct SkillActionRate(pub Timer);
 
+#[derive(Component, Copy, Clone)]
+pub struct SkillDamage(pub f32);
+
+#[derive(Component, Default, Copy, Clone)]
+pub enum SkillType{
+    #[default]
+    Boom
 }
+
+

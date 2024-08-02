@@ -1,5 +1,7 @@
 use crate::{player::{BodyDamageEvent, PlayerRoot, Size}, prelude::*};
 
+use crate::helpers::AnimationTimer;
+
 mod mob_type;
 mod spawner;
 
@@ -19,6 +21,9 @@ impl Plugin for MobPlugin{
             .add_plugins(
                     MobSpawnerPlugin
             )
+            .add_systems(
+                Update, 
+                update_mob_texutes_from_type.run_if(in_state(GamePhase::Tribulation)))
             .add_systems(
                 Update, 
                 (melee_move, melle_attack)
@@ -92,7 +97,7 @@ fn melle_attack(
     for (mob_trans, id, melee, MobSize(mob_size)) in units.iter(){
         if is_in_circle(
             player_tans.translation.xy(), player_size + mob_size, mob_trans.translation.xy()) {
-            attack_event.send(BodyDamageEvent(melee.damage, id));
+                attack_event.send(BodyDamageEvent(melee.damage, id));
         }
     }
 }
@@ -117,4 +122,23 @@ fn is_in_circle(centrum: Vec2, radius: f32, sample: Vec2) -> bool{
 pub struct MobBundle{
     mob: Mob,
     pub sprite: SpriteBundle,
+    pub speed: MobSpeed,
+    pub size: MobSize,
+}
+
+
+pub fn update_mob_texutes_from_type(
+    time: Res<Time>,
+    mut sprites: Query<(&MobType, &mut AnimationTimer, &mut TextureAtlas)>,
+){
+    for (mob_type, mut timer, mut texture) in sprites.iter_mut() {
+        let texture_num = match *mob_type {
+            _ => 4,
+        };
+
+        timer.0.tick(time.delta());
+        if timer.0.finished() {
+            texture.index = (texture.index + 1) % texture_num;
+        }
+    }
 }

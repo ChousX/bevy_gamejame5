@@ -88,7 +88,7 @@ fn mob_spawner(
                         },
                         ..default()
                     },
-                    layout,
+                    TextureAtlas::from(layout),
                     AnimationTimer::default()
                 )).id();
                 additional_bundle(mob_type, id, &mut commands);

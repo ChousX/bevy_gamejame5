@@ -13,6 +13,7 @@ pub mod prelude {
   pub use crate::domains::TerrainTextures;
   pub use crate::mob::MobTexture;
   pub use crate::player::BodyTexture;
+  pub use crate::player::SkillTexture;
 }
 
 use prelude::*;

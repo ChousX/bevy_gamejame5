@@ -2,9 +2,11 @@ use crate::{game::{GamePhase, Selected}, helpers::AnimationTimer, prelude::*};
 
 mod soul;
 mod body;
+mod skill;
 
 pub use soul::*;
 pub use body::*;
+pub use skill::*;
 
 pub struct PlayerPlugin;
 impl Plugin for PlayerPlugin {

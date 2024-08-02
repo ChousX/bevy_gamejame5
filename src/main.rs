@@ -23,7 +23,7 @@ fn main() {
                 .load_collection::<TerrainTextures>()
                 .load_collection::<BodyTexture>()
                 .load_collection::<MobTexture>()
-                .load_collection::<SkillTexture>()
+                .load_collection::<SkillEffectTexture>()
         ).add_plugins((
                 CameraPlugin,
                 MenuPlugin,

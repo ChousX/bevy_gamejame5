@@ -1,5 +1,5 @@
-use super::*;
-
+use crate::prelude::*;
+use std::time::Duration;
 
 #[derive(Component, Clone)]
 pub struct SkillEffectDuration{
@@ -26,7 +26,9 @@ impl SkillEffectDuration {
     }
 }
 
-pub fn skill_effect_entity_remover(
+///A system that removes the entity and its children of an
+///expired skill effect duration
+pub fn skill_effect_duration_remover(
     mut commands: Commands,
     durations: Query<(&SkillEffectDuration, Entity), Changed<SkillEffectDuration>>
 ){

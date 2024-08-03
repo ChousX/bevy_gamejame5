@@ -6,6 +6,7 @@ mod texture;
 mod skill_effect_type;
 
 use super::SkillType;
+use super::SkillTarget;
 use spawner::*;
 use duration::*;
 use skill_effect_type::SkillEffectType;
@@ -17,12 +18,14 @@ pub struct SkillEffectPlugin;
 impl Plugin for SkillEffectPlugin{
     fn build(&self, app: &mut App) {
         app
-            .add_event::<SpawnSkillEffect>()
             .add_systems(
                 Update, 
-                spawn_skill_effect.run_if(on_event::<SpawnSkillEffect>()))
-            .add_systems(
-                Update, 
-                skill_effect_duration_remover.run_if(in_state(AppState::Game)))
+                (
+                    skill_effect_duration_remover,
+                    animate_duration_skills
+                ).distributive_run_if(in_state(AppState::Game)))
+            .add_plugins(
+                SkillEffectSpawnerPlugin
+            )
     ;}
 }

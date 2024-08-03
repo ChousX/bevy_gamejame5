@@ -26,6 +26,7 @@ impl Plugin for PlayerPlugin {
             .add_plugins((
                 BodyPlugin,
                 SoulPlugin,
+                SkillPlugin,
             ));
     }
 }

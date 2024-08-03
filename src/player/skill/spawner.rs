@@ -1,4 +1,4 @@
-use crate::prelude::*;
+use crate::{player::{SkillActionRate, SkillLevel}, prelude::*};
 use super::SkillType;
 
 pub struct SkillSpawnerPlugin;
@@ -23,10 +23,13 @@ pub fn spawn_skill(
     use SkillType::*;
     for SpawnSkill(skill_type) in spawn_events.read(){
         match *skill_type {
-            Boom => {
-                
+            MagicBoom => {
+                commands.spawn((
+                    SkillActionRate(Timer::from_seconds(1.0, TimerMode::Repeating)),
+                    SkillType::MagicBoom,
+                    SkillLevel::new(10),
+                ));
             },
         }
     }
 }
-

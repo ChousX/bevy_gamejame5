@@ -42,7 +42,7 @@ pub fn spawn_skill_effect(
                         ..default()
                     },
                     TextureAtlas::from(textures.boom_layout.clone()),
-                    SkillEffectDuration::new(0.1, 17),
+                    SkillEffectDuration::new(0.05, 17),
                 ));
             },
         }

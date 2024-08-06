@@ -1,4 +1,5 @@
 use bevy::ecs::query;
+use ron::de;
 use crate::helpers::despawn_all;
 
 use crate::{helpers, player::{BodyRoot, HitPoints, Size}, prelude::*};
@@ -37,8 +38,8 @@ fn init_hp_ui(
         let bar = commands.spawn((
             NodeBundle {
                 style: Style {
-                    width: Val::Px(hp.max + 100.0),
-                    height: Val::Px(25.0),
+                    width: Val::Percent(hp.remaining()),
+                    height: Val::Percent(5.0),
                     ..default()
                 },
                 background_color: css::SNOW.into(),
@@ -47,12 +48,15 @@ fn init_hp_ui(
             HPBar,
         )).id();
 
-        commands.entity(entity).add_child(bar);
-
+        let space0 = commands.spawn(NodeBundle{style: Style {width: Val::Percent(45.0), height: Val::Percent(100.0), ..default()}, ..default()}).id();
+        let space1 = commands.spawn(NodeBundle{style: Style {width: Val::Percent(10.0), height: Val::Percent(100.0), ..default()}, ..default()}).id();
+        let space2 = commands.spawn(NodeBundle{style: Style {width: Val::Percent(45.0), height: Val::Percent(100.0), ..default()}, ..default()}).id();
+        let space3 = commands.spawn(NodeBundle{style: Style {width: Val::Percent(95.0), height: Val::Percent(100.0), ..default()}, ..default()}).id();
+        let remaining = hp.remaining();
         let red_stuff = commands.spawn((
                 NodeBundle{
                     style: Style {
-                        width: Val::Percent(hp.remaining()),
+                        width: Val::Percent(remaining),
                         height: Val::Percent(100.0),
                         ..default()
                     },
@@ -61,7 +65,11 @@ fn init_hp_ui(
                 },
                 HPInnerBar,
         )).id();
-
+        commands.entity(entity).add_child(space0);
+        commands.entity(entity).add_child(space1);
+        commands.entity(entity).add_child(space2);
+        commands.entity(space1).add_child(space3);
+        commands.entity(space1).add_child(bar);
         commands.entity(bar).add_child(red_stuff);
     }
 }

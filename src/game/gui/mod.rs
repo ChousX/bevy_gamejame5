@@ -88,7 +88,7 @@ fn init_gui(
         NodeBundle{
             style: Style {
                 width: Val::Percent(100.0),
-                height: Val::Percent(50.0),
+                height: Val::Percent(70.0),
                 flex_direction: FlexDirection::Row,
                 ..default()
             },
@@ -101,8 +101,9 @@ fn init_gui(
         NodeBundle {
             style: Style {
                 width: Val::Percent(100.0),
-                height: Val::Percent(30.0),
+                height: Val::Percent(10.0),
                 flex_direction: FlexDirection::Row,
+                justify_content: JustifyContent::Center,
                 ..default()
             },
             ..default()

@@ -9,14 +9,14 @@ use strum::{
     IntoStaticStr,
 };
 
-mod wfc;
+//mod wfc;
 mod editer;
 
 mod tile_picker;
 pub use tile_picker::*;
 
 pub use editer::*;
-pub use wfc::*;
+//pub use wfc::*;
 
 pub struct DomainPlugin;
 impl Plugin for DomainPlugin {

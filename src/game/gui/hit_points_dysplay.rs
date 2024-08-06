@@ -1,108 +1,76 @@
-use crate::{helpers, player::{BodyRoot, HitPoints}, prelude::*};
+use bevy::ecs::query;
+use crate::helpers::despawn_all;
+
+use crate::{helpers, player::{BodyRoot, HitPoints, Size}, prelude::*};
 
 use super::{GamePhase, GameUiBottomSection};
 
-pub struct HitPointsDysplayPlugin;
-impl Plugin for HitPointsDysplayPlugin {
+pub struct HitPointsUiPlugin;
+impl Plugin for HitPointsUiPlugin{
     fn build(&self, app: &mut App) {
         app
             .add_systems(
                 OnEnter(GamePhase::Tribulation), 
-                init_hit_point_dysplay)
-            .add_systems(
-                OnExit(GamePhase::Tribulation), 
-                helpers::despawn_all::<HitPointsCleanUp>)
+                init_hp_ui)
             .add_systems(
                 Update, 
-                bar_update.run_if(in_state(GamePhase::Tribulation)));
-    }
+                update_hp_ui.run_if(in_state(GamePhase::Tribulation)))
+            .add_systems(
+                OnExit(GamePhase::Tribulation), 
+                despawn_all::<HPBar>)
+    ;}
 }
 
-#[derive(Component)]
-struct HitPointsCleanUp;
+#[derive(Component, Clone, Copy)]
+struct HPInnerBar;
 
-fn init_hit_point_dysplay(
+#[derive(Component, Clone, Copy)]
+struct HPBar;
+
+fn init_hp_ui(
     mut commands: Commands,
-    menu_pos: Query<Entity, With<GameUiBottomSection>>,
-    hp: Query<&HitPoints, With<BodyRoot>>
-){
-    let root = commands.spawn((
-        NodeBundle {
-            style: Style {
-                ..default()
-            },
-            ..default()
-        },
-        HitPointsCleanUp,
-    )).id();
-
-    let menu_pos = menu_pos.single();
-    commands.entity(menu_pos).add_child(root);
-
-    let hp_bar = commands.spawn((
+    players: Query<(Entity, &HitPoints, &Size)>,
+    root: Query<Entity, With<GameUiBottomSection>>
+) {
+    let entity = root.single();
+    for (_, hp, _) in players.iter(){
+        let bar = commands.spawn((
             NodeBundle {
                 style: Style {
-                    width: Val::Px(400.0),
-                    height: Val::Px(20.0),
+                    width: Val::Px(hp.max + 100.0),
+                    height: Val::Px(25.0),
                     ..default()
                 },
+                background_color: css::SNOW.into(),
                 ..default()
             },
+            HPBar,
+        )).id();
 
-    )).id();
+        commands.entity(entity).add_child(bar);
 
-    let hp = hp.single();
-
-    let percent_there = hp.remaining();
-
-    let bar_empty = commands.spawn((
-        NodeBundle {
-            style: Style {
-                height: Val::Percent(100.0),
-                width: Val::Percent(100.0 - percent_there),
-                ..default()
-            },
-            background_color: css::GRAY.into(),
-            ..default()
-        },
-        BarEmpty,
-    )).id();
-
-    let bar_full = commands.spawn((
-            NodeBundle {
-                style: Style {
-                    height: Val::Percent(100.0),
-                    width: Val::Percent(percent_there),
+        let red_stuff = commands.spawn((
+                NodeBundle{
+                    style: Style {
+                        width: Val::Percent(hp.remaining()),
+                        height: Val::Percent(100.0),
+                        ..default()
+                    },
+                    background_color: css::CRIMSON.into(),
                     ..default()
                 },
-                ..default()
-            },
-            BarFull,
-    )).id();
+                HPInnerBar,
+        )).id();
 
-    commands.entity(root).add_child(hp_bar);
-    commands.entity(hp_bar).add_child(bar_full);
-    commands.entity(hp_bar).add_child(bar_empty);
+        commands.entity(bar).add_child(red_stuff);
+    }
 }
 
-#[derive(Component)]
-struct BarFull;
-
-#[derive(Component)]
-struct BarEmpty;
-
-fn bar_update(
-    mut bar_empty: Query<&mut Style, With<BarEmpty>>,
-    mut bar_full: Query<&mut Style, With<BarFull>>,
-    //a sneeky error is if there is more than one none will show
-    hp: Query<&HitPoints, Changed<HitPoints>>
+fn update_hp_ui(
+    players: Query<&HitPoints, Changed<HitPoints>>,
+    mut red_stuff: Query<&mut Style, With<HPInnerBar>>
 ){
-    if let Ok(hp) = hp.get_single(){
-        let left = hp.remaining();
-        let mut bar_empty = bar_empty.single_mut();
-        let mut bar_full = bar_full.single_mut();
-
-        bar_empty.width = Val::Percent(100.0 - left);
-        bar_full.width = Val::Percent(left);
-    }
+    let hp = players.single();
+    let mut red_stuff = red_stuff.single_mut();
+    red_stuff.width = Val::Percent(hp.remaining());
 }

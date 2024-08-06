@@ -5,7 +5,7 @@ mod time_dysplay;
 mod mini_map_dysplay;
 mod hit_points_dysplay;
 
-use hit_points_dysplay::HitPointsDysplayPlugin;
+use hit_points_dysplay::HitPointsUiPlugin;
 pub use stats_dysplay::*;
 pub use time_dysplay::*;
 pub use mini_map_dysplay::*;
@@ -20,7 +20,7 @@ impl Plugin for GameUiPlugin {
                 init_gui
             ).add_plugins((
                 TimeDyplayPlugin,
-                //HitPointsDysplayPlugin
+                HitPointsUiPlugin
             ))
     ;}
 }

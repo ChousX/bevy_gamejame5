@@ -10,11 +10,13 @@ use strum::{
 };
 
 //mod wfc;
+mod save;
 mod editer;
 
 mod tile_picker;
 pub use tile_picker::*;
-
+pub use save::SaveDomainEvent;
+use save::DomainSavePlugin;
 pub use editer::*;
 //pub use wfc::*;
 
@@ -32,6 +34,7 @@ impl Plugin for DomainPlugin {
             ).add_plugins((
                 TilemapPlugin,
                 TilePickerPlugin,
+                DomainSavePlugin,
             ))
     ;}
 }
@@ -40,7 +43,7 @@ pub fn add_domain(
     mut commands: Commands,
     assets: Res<TerrainTextures>
 ) {
-    let map_size = TilemapSize { x: 150, y: 150 };
+    let map_size = TilemapSize { x: 50, y: 50 };
     let mut tile_storage = TileStorage::empty(map_size);
     let tilemap_entity = commands.spawn_empty().id();
     let tilemap_id = TilemapId(tilemap_entity);

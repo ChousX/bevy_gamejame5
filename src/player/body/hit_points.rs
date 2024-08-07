@@ -43,8 +43,16 @@ impl HitPoints {
         }
     }
 
+    pub fn missing(&self) -> f32 {
+        self.max - self.current
+    }
+
     pub fn remaining(&self) -> f32{
-        (self.current / self.max) * 100.0
+        self.current / self.max 
+    }
+
+    pub fn get_v_pos(&self) ->  f32 {
+        self.current - (self.max / 2.0)  
     }
 }
 
